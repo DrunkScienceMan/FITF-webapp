@@ -1,0 +1,191 @@
+[
+  {
+    "id": "brawler",
+    "name": "Brawler",
+    "title": "Brawler",
+    "tags": [
+      "FITFsubclass"
+    ],
+    "subclassbonus1": [
+      "Bully: For Intimidation checks, you can use your STR modifier, along with any levels of Focus."
+    ],
+    "subclassbonus2": [
+      "Survivor: Bonus die on all STR and DUR checks to avoid Status Effect."
+    ],
+    "subclassbonus3": [
+      "Warrior: Add extra d8 Physical Damage to successful Bludgeoning attack."
+    ],
+    "HPbonus": 4,
+    "mainstats": [
+      "STR",
+      "DUR"
+    ]
+  },
+  {
+    "id": "dog",
+    "name": "Dog",
+    "tags": [
+      "FITFsubclass"
+    ],
+    "HPbonus": 2,
+    "mainstats": [
+      "STR",
+      "AGI"
+    ],
+    "subclassbonus1": null
+  },
+  {
+    "id": "explorer",
+    "name": "Explorer",
+    "title": "Explorer",
+    "tags": [
+      "FITFsubclass"
+    ],
+    "subclassbonus1": [
+      "Ranger: No Speed penalties from Difficult "
+    ],
+    "subclassbonus2": [
+      "Seasoned: For Perception checks, use KNO modifier + Focus."
+    ],
+    "subclassbonus3": [
+      "Tracker: Get 1 bonus die on all checks to track living entities and vehicles."
+    ],
+    "HPbonus": 2,
+    "mainstats": [
+      "AGI",
+      "KNO"
+    ]
+  },
+  {
+    "id": "healer",
+    "name": "Healer",
+    "title": "Healer",
+    "tags": [
+      "FITFsubclass"
+    ],
+    "subclassbonus1": [
+      "Diagnosis: Bonus die on checks to understand physical/mental state of entities. "
+    ],
+    "subclassbonus2": [
+      "Mender: Heal entities for 3d4 with Med Kits, doubles to 6d4 on Crit Success. "
+    ],
+    "subclassbonus3": [
+      "Shaman: 1 additional use of medical resources (Amnestics, Med Kits, etc.)."
+    ],
+    "HPbonus": 3,
+    "mainstats": [
+      "DUR",
+      "KNO"
+    ]
+  },
+  {
+    "id": "marksman",
+    "name": "Marksman",
+    "title": "Marksman",
+    "tags": [
+      "FITFsubclass"
+    ],
+    "subclassbonus1": [
+      "Bullseye: Artillery attacks within 1 meter do not suffer penalty die. "
+    ],
+    "subclassbonus2": [
+      "Punisher: Add 1d4 Physical Damage to successful Artillery attack. "
+    ],
+    "subclassbonus3": [
+      "Relentless: 1 bonus die on checks to find hiding entities."
+    ],
+    "HPbonus": 3,
+    "mainstats": [
+      "AGI",
+      "DUR"
+    ]
+  },
+  {
+    "id": "occultist",
+    "name": "Occultist",
+    "title": "Occultist",
+    "tags": [
+      "FITFsubclass"
+    ],
+    "subclassbonus1": [
+      "Aberrant: Once per turn, add a d6 Anomalous Damage to a successful attack. "
+    ],
+    "subclassbonus2": [
+      "Medium: For Examination checks, use POW modifier + Focus. "
+    ],
+    "subclassbonus3": [
+      "Outsider: Connection with anomalous entities provides unique information."
+    ],
+    "HPbonus": 3,
+    "mainstats": [
+      "POW",
+      "CHA"
+    ]
+  },
+  {
+    "id": "scp-6448",
+    "name": "SCP-6448",
+    "title": "SCP-6448",
+    "tags": [
+      "FITFsubclass"
+    ],
+    "subclassbonus1": [
+      "..."
+    ],
+    "subclassbonus2": [
+      "..."
+    ],
+    "subclassbonus3": [
+      "..."
+    ],
+    "HPbonus": 8,
+    "mainstats": [
+      "STR",
+      "DUR"
+    ]
+  },
+  {
+    "id": "showman",
+    "name": "Showman",
+    "title": "Showman",
+    "tags": [
+      "FITFsubclass"
+    ],
+    "subclassbonus1": [
+      "Blessed: For 5 Luck, make a Fortune roll automatically succeed. "
+    ],
+    "subclassbonus2": [
+      "Momentum: On a roll of 20 or higher on Ability check, regain 1 Luck point. "
+    ],
+    "subclassbonus3": [
+      "Orator: Automatically gain 1 level of Focus in Charisma-based Skills."
+    ],
+    "HPbonus": 2,
+    "mainstats": [
+      "CHA",
+      "POW"
+    ]
+  },
+  {
+    "id": "technician",
+    "name": "Technician",
+    "title": "Technician",
+    "tags": [
+      "FITFsubclass"
+    ],
+    "subclassbonus1": [
+      "Academic: Automatically gain 1 level of Focus in every Knowledge-based Skill."
+    ],
+    "subclassbonus2": [
+      "Engineer: Bonus die on checks to use, make, or repair Tools, Installations, or Vehicles. "
+    ],
+    "subclassbonus3": [
+      "Rhetoric: For Negotiation checks, use KNO modifier + Focus."
+    ],
+    "HPbonus": 2,
+    "mainstats": [
+      "KNO",
+      "POW"
+    ]
+  }
+]

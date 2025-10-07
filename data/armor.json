@@ -1,0 +1,207 @@
+[
+  {
+    "id": "anomalous-hide",
+    "name": "Anomalous hide",
+    "tags": "FITFarmorvest",
+    "damageReCh": 2,
+    "damageReCo": -2,
+    "damageReEl": -2,
+    "damageReEx": -2,
+    "damageReHe": -2,
+    "damageRePhy": 3,
+    "damageReMe": 0,
+    "damageReAn": 0,
+    "damageReSo": -2,
+    "damageReLi": 0,
+    "effectac": null
+  },
+  {
+    "id": "bulletproofvest",
+    "name": "BulletproofVest",
+    "tags": [
+      "FITFarmorvest"
+    ],
+    "damagetype": [
+      "physical"
+    ],
+    "effectac": 2,
+    "damageRePhy": 2
+  },
+  {
+    "id": "chemical-resistant-vest",
+    "name": "Chemical resistant vest",
+    "type": "armor",
+    "armortype": [
+      "vest"
+    ],
+    "buffs": null,
+    "debuffs": null,
+    "effectac": 1,
+    "damagetype": [
+      "chemical"
+    ],
+    "damageReCh": null,
+    "tags": [
+      "FITFarmorvest"
+    ]
+  },
+  {
+    "id": "denimjacket",
+    "name": "DenimJacket",
+    "tags": [
+      "FITFarmorvest"
+    ],
+    "damagetype": [
+      "physical"
+    ],
+    "damageRePhy": 0,
+    "effectac": 1
+  },
+  {
+    "id": "flame-resistant-vest",
+    "name": "Flame resistant vest",
+    "type": "armor",
+    "armortype": [
+      "vest"
+    ],
+    "buffs": null,
+    "debuffs": null,
+    "effectac": 1,
+    "damagetype": [
+      "heat"
+    ],
+    "damageReHe": 2,
+    "tags": [
+      "FITFarmorvest"
+    ]
+  },
+  {
+    "id": "heat-resistant-suit",
+    "name": "Heat resistant suit",
+    "tags": [
+      "FITFarmorvest"
+    ],
+    "damageReCo": 2,
+    "effectac": 1,
+    "damageReHe": 3
+  },
+  {
+    "id": "heavy-vest",
+    "name": "Heavy vest",
+    "type": "armor",
+    "armortype": [
+      "vest"
+    ],
+    "buffs": null,
+    "debuffs": null,
+    "effectac": 3,
+    "damageRePhy": 4,
+    "damageReEx": 4,
+    "damagetype": null,
+    "other_effects": [
+      "Speed Decrease (2 m)"
+    ],
+    "title": "Heavy vest",
+    "debuffPER": null,
+    "debuffspeed": 2,
+    "tags": [
+      "FITFarmorvest"
+    ]
+  },
+  {
+    "id": "impact-vest",
+    "name": "Impact vest",
+    "type": "armor",
+    "armortype": [
+      "vest"
+    ],
+    "buffs": null,
+    "debuffs": null,
+    "effectac": 1,
+    "damagetype": [
+      "physical"
+    ],
+    "damageRePhy": 2,
+    "tags": [
+      "FITFarmorvest"
+    ]
+  },
+  {
+    "id": "multi-threat-vest",
+    "name": "Multi-threat vest",
+    "type": "armor",
+    "armortype": [
+      "vest"
+    ],
+    "buffs": null,
+    "debuffs": null,
+    "effectac": 2,
+    "damagetype": [
+      "physical"
+    ],
+    "other effects": [
+      "Speed Decrease (1 m)"
+    ],
+    "debuffspeed": 1,
+    "damageRePhy": 3,
+    "tags": [
+      "FITFarmorvest"
+    ]
+  },
+  {
+    "id": "noarmorvest",
+    "name": "NoArmorvest",
+    "tags": [
+      "FITFarmorvest"
+    ]
+  },
+  {
+    "id": "rubber-padded-vest",
+    "name": "Rubber padded vest",
+    "type": "armor",
+    "armortype": [
+      "vest"
+    ],
+    "buffs": null,
+    "debuffs": null,
+    "effectac": 1,
+    "damagetype": [
+      "electric"
+    ],
+    "damageReEl": 2,
+    "tags": [
+      "FITFarmorvest"
+    ]
+  },
+  {
+    "id": "thermal-vest",
+    "name": "Thermal vest",
+    "type": "armor",
+    "armortype": [
+      "vest"
+    ],
+    "buffs": null,
+    "debuffs": null,
+    "effectac": 1,
+    "damagetype": [
+      "cold"
+    ],
+    "damageReCo": 2,
+    "tags": [
+      "FITFarmorvest"
+    ]
+  },
+  {
+    "id": "warmwinterjacket",
+    "name": "WarmWinterjacket",
+    "tags": [
+      "FITFarmorvest"
+    ],
+    "damagetype": [
+      "cold"
+    ],
+    "damageReCo": 1,
+    "effectac": 1,
+    "damageReHe": -1
+  }
+]

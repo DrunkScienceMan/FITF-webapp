@@ -1,0 +1,167 @@
+[
+  {
+    "id": "audio-scramble-helmet",
+    "name": "Audio Scramble Helmet",
+    "buffs": null,
+    "debuffs": null,
+    "effectac": 1,
+    "damagereduction": null,
+    "damagetype": null,
+    "debuffPER": 2,
+    "tags": [
+      "FITFhelmet"
+    ],
+    "damageRePhy": 0,
+    "damageReEx": 0,
+    "other_effects": [
+      "Effect Immunity (Sound-based memetic effects)",
+      "Perception Decrease (2) (Hearing)"
+    ]
+  },
+  {
+    "id": "ballistic-helmet",
+    "name": "Ballistic helmet",
+    "buffs": null,
+    "debuffs": null,
+    "effectac": 1,
+    "damagetype": [
+      "physical"
+    ],
+    "damageRePhy": 2,
+    "tags": [
+      "FITFhelmet"
+    ]
+  },
+  {
+    "id": "darkview-helmet",
+    "name": "Darkview helmet",
+    "buffs": null,
+    "debuffs": null,
+    "effectac": 1,
+    "damageReLi": 2,
+    "debuffPER": 1,
+    "tags": [
+      "FITFhelmet"
+    ],
+    "other_effects": [
+      "Perception Decrease (1) (Sight)"
+    ]
+  },
+  {
+    "id": "fortitude-helmet",
+    "name": "Fortitude helmet",
+    "buffs": null,
+    "debuffs": null,
+    "effectac": 1,
+    "damageReMe": 2,
+    "debuffPER": 1,
+    "damagereduction": null,
+    "tags": [
+      "FITFhelmet"
+    ],
+    "other_effects": [
+      "Perception Decrease (1) (Sight, Hearing)"
+    ]
+  },
+  {
+    "id": "hardhat",
+    "name": "Hardhat",
+    "buffs": null,
+    "debuffs": null,
+    "effectac": 1,
+    "damageRePhy": 1,
+    "damagetype": [
+      "physical"
+    ],
+    "tags": [
+      "FITFhelmet"
+    ]
+  },
+  {
+    "id": "heavy-helmet",
+    "name": "Heavy helmet",
+    "buffs": null,
+    "debuffs": null,
+    "effectac": 3,
+    "damageReEx": 4,
+    "damagetype": [
+      "explosive",
+      "physical"
+    ],
+    "damageRePhy": 4,
+    "tags": [
+      "FITFhelmet"
+    ]
+  },
+  {
+    "id": "infohazard-filter",
+    "name": "Infohazard filter",
+    "buffs": [
+      "filtert optische infohazard"
+    ],
+    "debuffs": null,
+    "effectac": 0,
+    "damagereduction": 0,
+    "damagetype": null,
+    "tags": [
+      "FITFhelmet"
+    ],
+    "other_effects": [
+      "filtert optische infohazard"
+    ]
+  },
+  {
+    "id": "nohelmet",
+    "name": "NoHelmet",
+    "tags": [
+      "FITFhelmet"
+    ]
+  },
+  {
+    "id": "reinforced-helmet",
+    "name": "Reinforced helmet",
+    "buffs": null,
+    "debuffs": null,
+    "effectac": 2,
+    "damagetype": [
+      "physical"
+    ],
+    "damageRePhy": 2,
+    "tags": [
+      "FITFhelmet"
+    ]
+  },
+  {
+    "id": "sound-insulating-helmet",
+    "name": "Sound insulating helmet",
+    "buffs": null,
+    "debuffs": null,
+    "effectac": 1,
+    "damagetype": [
+      "sound"
+    ],
+    "damageReSo": 2,
+    "tags": [
+      "FITFhelmet"
+    ],
+    "other_effects": [
+      "Perception Decrease (1) (Hearing)"
+    ]
+  },
+  {
+    "id": "visual-scramble-helmet",
+    "name": "Visual scramble helmet",
+    "buffs": null,
+    "debuffs": null,
+    "effectac": 1,
+    "damagetype": null,
+    "debuffPER": 2,
+    "tags": [
+      "FITFhelmet"
+    ],
+    "other_effects": [
+      "Effect Immunity (Sight-based memetic effects)",
+      "Perception Decrease (2) (Sight)"
+    ]
+  }
+]

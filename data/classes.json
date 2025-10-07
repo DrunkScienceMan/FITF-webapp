@@ -1,0 +1,167 @@
+[
+  {
+    "id": "civilian",
+    "name": "Civilian",
+    "classbonus1": null,
+    "classbonus2": null,
+    "startingHP": 20,
+    "speed": 8,
+    "naturalAC": 10,
+    "tags": [
+      "FITFclass"
+    ]
+  },
+  {
+    "id": "d-class",
+    "name": "D-Class",
+    "title": "D-Class",
+    "tags": [
+      "FITFclass"
+    ],
+    "classbonus1": [
+      "Convict: Use the Escape or Move action as a free action once per combat."
+    ],
+    "classbonus2": [
+      "Limber: Spend 1 Luck to gain a bonus die on any Agility-based check."
+    ],
+    "startingHP": 28,
+    "naturalAC": 12,
+    "speed": 8,
+    "classname": "D-Class"
+  },
+  {
+    "id": "dogclass",
+    "name": "DogClass",
+    "tags": [
+      "FITFclass"
+    ],
+    "naturalAC": 10,
+    "speed": 10,
+    "startingHP": 12,
+    "classbonus1": [
+      "Watchdog: Use takedown as a free action once per combat"
+    ]
+  },
+  {
+    "id": "field-agent",
+    "name": "Field Agent",
+    "title": "Field Agent",
+    "tags": [
+      "FITFclass"
+    ],
+    "classbonus1": [
+      "Enigma: Use Converse or Hide action as a free action once per combat."
+    ],
+    "classbonus2": [
+      "Guide: Spend 1 Luck to gain a bonus die on any Charisma-based check."
+    ],
+    "startingHP": 32,
+    "naturalAC": 12,
+    "speed": 6,
+    "classname": "Field Agent"
+  },
+  {
+    "id": "mtf-agent",
+    "name": "MTF Agent",
+    "title": "MTF Agent",
+    "tags": [
+      "FITFclass"
+    ],
+    "classbonus1": [
+      "Capable - You can use the Help or Ready action as a free action once per combat."
+    ],
+    "classbonus2": [
+      "Lucid - You can spend 1 Luck to gain a bonus die on any Power-based check."
+    ],
+    "startingHP": 40,
+    "naturalAC": 12,
+    "speed": 6,
+    "classname": "MTF Agent"
+  },
+  {
+    "id": "not-deer",
+    "name": "Not Deer",
+    "title": "D-Class",
+    "tags": [
+      "FITFclass"
+    ],
+    "classbonus1": [
+      "...."
+    ],
+    "classbonus2": [
+      "...."
+    ],
+    "startingHP": 30,
+    "naturalAC": 14,
+    "speed": 10,
+    "classname": "Not Deer"
+  },
+  {
+    "id": "researcher",
+    "name": "Researcher",
+    "title": "Researcher",
+    "tags": [
+      "FITFclass"
+    ],
+    "classbonus1": [
+      "Analyst: Use the Assess or Inspect action as a free action once per combat. "
+    ],
+    "classbonus2": [
+      "Scholar: Spend 1 Luck to gain a bonus die on any Knowledge-based check."
+    ],
+    "startingHP": 24,
+    "naturalAC": 12,
+    "speed": 7,
+    "classname": "Researcher"
+  },
+  {
+    "id": "security-officer",
+    "name": "Security Officer",
+    "title": "Security Officer",
+    "tags": [
+      "FITFclass"
+    ],
+    "classbonus1": [
+      "Fortress: Use Brace or Resist action as a free action once per combat. "
+    ],
+    "classbonus2": [
+      "Powerful: Spend 1 Luck to gain a bonus die on any Strength-based check."
+    ],
+    "startingHP": 36,
+    "naturalAC": 12,
+    "speed": 6,
+    "classname": "Security Officer"
+  },
+  {
+    "id": "soldier",
+    "name": "Soldier",
+    "title": "Soldier",
+    "tags": [
+      "FITFclass"
+    ],
+    "classbonus1": [
+      "Convict; Use the Escape or Move action as a free action once per combat."
+    ],
+    "classbonus2": [
+      "Limber; Spend 1 Luck to gain a bonus die on any Agility-based check."
+    ],
+    "startingHP": 28,
+    "naturalAC": 12,
+    "speed": 8,
+    "classname": "Soldier"
+  },
+  {
+    "id": "type-green",
+    "name": "Type green",
+    "tags": "FITFclass",
+    "classbonus1": [
+      "Reality bender: One free attack action per turn"
+    ],
+    "classbonus2": [
+      "Reality denial. Spend 1 Luck point to nullify an incoming attack"
+    ],
+    "startingHP": 30,
+    "speed": 5,
+    "naturalAC": 12
+  }
+]
