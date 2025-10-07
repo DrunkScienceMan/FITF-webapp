@@ -1,398 +1,491 @@
-// Main application logic and UI management
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-// Initialize the application
-async function init() {
-    console.log('Loading game data...');
+body {
+    font-family: 'Courier New', monospace;
+    background: #1a1a1a;
+    color: #e0e0e0;
+    padding: 20px;
+    line-height: 1.6;
+}
 
-    const loaded = await loadGameData();
-    if (!loaded) {
-        alert('Error loading game data. Please check that all JSON files are in the data/ folder.');
-        return;
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #2a2a2a;
+    padding: 20px;
+    border: 2px solid #444;
+    border-radius: 8px;
+}
+
+h1 {
+    color: #ff6b6b;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.section {
+    background: #333;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border-left: 4px solid #ff6b6b;
+}
+
+.section-title {
+    color: #ff6b6b;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.stat-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+label {
+    color: #aaa;
+    font-weight: bold;
+    min-width: 80px;
+}
+
+input[type="number"],
+select {
+    background: #1a1a1a;
+    border: 1px solid #555;
+    color: #e0e0e0;
+    padding: 8px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    flex: 1;
+}
+
+select option {
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+input[type="number"]:focus,
+select:focus {
+    outline: none;
+    border-color: #ff6b6b;
+}
+
+button {
+    background: #ff6b6b;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #ff5252;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.health-bar-container {
+    background: #1a1a1a;
+    height: 30px;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    margin: 10px 0;
+}
+
+.health-bar {
+    background: linear-gradient(90deg, #ff6b6b, #ff8787);
+    height: 100%;
+    transition: width 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: bold;
+}
+
+.combat-section {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.dice-result-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.dice-result {
+    background: #1a1a1a;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1.5em;
+    color: #4ecdc4;
+    min-width: 100px;
+}
+
+.dice-notation {
+    background: #0a0a0a;
+    padding: 5px 10px;
+    border-radius: 3px;
+    text-align: center;
+    font-size: 0.8em;
+    color: #888;
+    min-width: 100px;
+}
+
+.skill-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.skill-item {
+    background: #1a1a1a;
+    padding: 10px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.skill-item:hover {
+    background: #252525;
+    border-color: #444;
+}
+
+.skill-item.skill-focused {
+    background: linear-gradient(135deg, #1a3a3a, #1a1a2a);
+    border-color: #4ecdc4;
+    box-shadow: 0 0 15px rgba(78, 205, 196, 0.5),
+                0 0 30px rgba(78, 205, 196, 0.3),
+                inset 0 0 10px rgba(78, 205, 196, 0.2);
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.skill-item.skill-focused:hover {
+    box-shadow: 0 0 20px rgba(78, 205, 196, 0.7),
+                0 0 40px rgba(78, 205, 196, 0.4),
+                inset 0 0 15px rgba(78, 205, 196, 0.3);
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 0 15px rgba(78, 205, 196, 0.5),
+                    0 0 30px rgba(78, 205, 196, 0.3),
+                    inset 0 0 10px rgba(78, 205, 196, 0.2);
     }
-
-    populateDropdowns();
-
-    document.getElementById('armorSelect').value = 'noarmorvest';
-    document.getElementById('helmetSelect').value = 'nohelmet';
-    document.getElementById('weaponSelect').value = 'basicstrike';
-
-    loadCharacter();
-    renderSkills();
-    updateAll();
-
-    console.log('Application initialized successfully!');
-}
-
-function populateDropdowns() {
-    const classSelect = document.getElementById('classSelect');
-    classes.forEach(c => {
-        const option = document.createElement('option');
-        option.value = c.id;
-        option.textContent = c.name;
-        classSelect.appendChild(option);
-    });
-
-    const subclassSelect = document.getElementById('subclassSelect');
-    subclasses.forEach(s => {
-        const option = document.createElement('option');
-        option.value = s.id;
-        option.textContent = s.name;
-        subclassSelect.appendChild(option);
-    });
-
-    const weaponSelect = document.getElementById('weaponSelect');
-    weapons.forEach(w => {
-        const option = document.createElement('option');
-        option.value = w.id;
-        option.textContent = w.name;
-        weaponSelect.appendChild(option);
-    });
-
-    const armorSelect = document.getElementById('armorSelect');
-    armors.forEach(a => {
-        const option = document.createElement('option');
-        option.value = a.id;
-        option.textContent = a.name;
-        armorSelect.appendChild(option);
-    });
-
-    const helmetSelect = document.getElementById('helmetSelect');
-    helmets.forEach(h => {
-        const option = document.createElement('option');
-        option.value = h.id;
-        option.textContent = h.name;
-        helmetSelect.appendChild(option);
-    });
-}
-
-function renderSkills() {
-    const grid = document.getElementById('skillsGrid');
-    grid.innerHTML = '';
-
-    Object.keys(character.skills).forEach(skill => {
-        const div = document.createElement('div');
-        div.className = 'skill-item';
-        if (character.skills[skill].focus) {
-            div.classList.add('skill-focused');
-        }
-
-        const label = document.createElement('span');
-        label.textContent = skill;
-
-        const value = document.createElement('span');
-        value.className = 'skill-value';
-        value.id = `skill-${skill}`;
-        value.textContent = getSkillValue(skill);
-
-        // Make the entire skill item clickable
-        div.onclick = () => {
-            character.skills[skill].focus = !character.skills[skill].focus;
-            div.classList.toggle('skill-focused');
-            updateAll();
-            saveCharacter();
-        };
-
-        div.appendChild(label);
-        div.appendChild(value);
-        grid.appendChild(div);
-    });
-}
-
-function updateDamageReduction() {
-    const damageType = document.getElementById('damageTypeSelect').value;
-    const reduction = calculateDamageReduction(damageType);
-    const display = document.getElementById('damageReductionDisplay');
-    
-    if (reduction > 0) {
-        display.innerHTML = `<strong>Current Damage Reduction (${damageType}):</strong> ${reduction}`;
-    } else if (reduction < 0) {
-        display.innerHTML = `<strong>Current Damage Vulnerability (${damageType}):</strong> ${Math.abs(reduction)} (extra damage)`;
-    } else {
-        display.innerHTML = `<strong>Current Damage Reduction (${damageType}):</strong> None`;
-    }
-}
-
-function calculateDamageReduction(damageType) {
-    const armor = getSelectedArmor();
-    const helmet = getSelectedHelmet();
-    
-    let reduction = 0;
-    
-    const damageTypeMap = {
-        'physical': 'damageRePhy',
-        'heat': 'damageReHe',
-        'cold': 'damageReCo',
-        'electrical': 'damageReEl',
-        'chemical': 'damageReCh',
-        'explosive': 'damageReEx',
-        'light': 'damageReLi',
-        'sound': 'damageReSo',
-        'memetic': 'damageReMe',
-        'anomalous': 'damageReAn'
-    };
-    
-    const reductionProp = damageTypeMap[damageType];
-    
-    if (armor && armor[reductionProp]) {
-        reduction += armor[reductionProp];
-    }
-    
-    if (helmet && helmet[reductionProp]) {
-        reduction += helmet[reductionProp];
-    }
-    
-    return reduction;
-}
-
-function updateSkills() {
-    Object.keys(character.skills).forEach(skill => {
-        const elem = document.getElementById(`skill-${skill}`);
-        if (elem) {
-            elem.textContent = getSkillValue(skill);
-        }
-    });
-}
-
-function updateHP() {
-    character.maxHP = calculateMaxHP();
-    if (character.currentHP > character.maxHP) {
-        character.currentHP = character.maxHP;
-    }
-    updateHealthBar();
-}
-
-function updateAC() {
-    const ac = calculateAC();
-    document.getElementById('acDisplay').textContent = ac;
-}
-
-function updateSpeed() {
-    const speed = calculateSpeed();
-    document.getElementById('speedDisplay').textContent = speed + 'm';
-    document.getElementById('initiativeDisplay').textContent = '+' + getStat('AGI');
-}
-
-function updateHealthBar() {
-    const percent = (character.currentHP / character.maxHP) * 100;
-    document.getElementById('healthBar').style.width = percent + '%';
-    document.getElementById('healthText').textContent = `${character.currentHP} / ${character.maxHP}`;
-}
-
-function rollAttack() {
-    const weapon = getSelectedWeapon();
-    if (!weapon) {
-        alert('Please select a weapon first!');
-        return;
-    }
-
-    const hitBonusData = calculateHitBonus();
-    const hitRoll = Math.floor(Math.random() * 20) + 1;
-    const hitTotal = hitRoll + hitBonusData.total;
-
-    let hitText = `${hitTotal}`;
-    if (hitRoll === 20) hitText += ' (CRIT!)';
-    if (hitRoll === 1) hitText += ' (FUMBLE!)';
-    document.getElementById('attackRoll').textContent = `Hit: ${hitText}`;
-    
-    const hitNotation = `1d20(${hitRoll})` + 
-        (hitBonusData.breakdown.length > 0 ? ' + ' + hitBonusData.breakdown.join(' + ') : '');
-    document.getElementById('attackNotation').textContent = hitNotation;
-
-    const damageData = calculateDamage();
-    
-    const finalDamage = hitRoll === 20 ? damageData.total * 2 : damageData.total;
-    const damageText = hitRoll === 20 ? `${finalDamage} (CRIT x2)` : `${finalDamage}`;
-    document.getElementById('damageRoll').textContent = `Dmg: ${damageText}`;
-    
-    document.getElementById('damageNotation').textContent = damageData.breakdown.join(' + ');
-    
-    console.log(`Attack Roll: 1d20(${hitRoll}) + ${hitBonusData.total} = ${hitTotal}`);
-    console.log(`Hit Breakdown: ${hitNotation}`);
-    console.log(`Damage: ${damageData.notation} = ${finalDamage}`);
-}
-
-function takeDamageByType() {
-    const amount = parseInt(document.getElementById('damageInput').value) || 0;
-    if (amount <= 0) return;
-
-    const damageType = document.getElementById('damageTypeSelect').value;
-    const reduction = calculateDamageReduction(damageType);
-    const actualDamage = Math.max(0, amount - reduction);
-    
-    character.currentHP = Math.max(0, character.currentHP - actualDamage);
-    updateHealthBar();
-    saveCharacter();
-
-    console.log(`${amount} ${damageType} damage - ${reduction} reduction = ${actualDamage} actual damage`);
-    
-    if (reduction !== 0 && actualDamage !== amount) {
-        if (reduction > 0) {
-            alert(`Armor absorbed ${reduction} damage! Taking ${actualDamage} damage.`);
-        } else {
-            alert(`Vulnerability! Taking ${actualDamage} damage (${Math.abs(reduction)} extra).`);
-        }
-    }
-    
-    if (character.currentHP === 0) {
-        alert('Character is unconscious!');
+    50% {
+        box-shadow: 0 0 20px rgba(78, 205, 196, 0.7),
+                    0 0 40px rgba(78, 205, 196, 0.5),
+                    inset 0 0 15px rgba(78, 205, 196, 0.3);
     }
 }
 
-function heal() {
-    const amount = parseInt(document.getElementById('damageInput').value) || 0;
-    if (amount <= 0) return;
-
-    character.currentHP = Math.min(character.maxHP, character.currentHP + amount);
-    updateHealthBar();
-    saveCharacter();
+.skill-value {
+    color: #4ecdc4;
+    font-weight: bold;
 }
 
-function resetHealth() {
-    character.currentHP = character.maxHP;
-    updateHealthBar();
-    saveCharacter();
+.skill-item.skill-focused .skill-value {
+    color: #6effef;
+    text-shadow: 0 0 5px rgba(78, 205, 196, 0.8);
 }
 
-function updateAll() {
-    console.log('updateAll() called');
-    updateSkills();
-    updateHP();
-    updateAC();
-    updateSpeed();
-    updateEquipmentStats();
-    updateHealthBar();
-    updateDamageReduction();
-    saveCharacter();
+.focus-toggle {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
 }
 
-function updateEquipmentStats() {
-    console.log('Updating equipment stats...');
-    updateWeaponStats();
-    updateArmorStats();
-    updateHelmetStats();
+.weapon-info {
+    background: #1a1a1a;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 10px;
 }
 
-function updateWeaponStats() {
-    const weapon = getSelectedWeapon();
-    const statsDiv = document.getElementById('weaponStats');
-    
-    console.log('Updating weapon stats:', weapon);
-    
-    if (!weapon) {
-        statsDiv.innerHTML = '<em>No weapon selected</em>';
-        return;
-    }
-    
-    const properties = Array.isArray(weapon.weaponproperty) 
-        ? weapon.weaponproperty.join(', ') 
-        : weapon.weaponproperty || '';
-    
-    let html = `<strong>Damage:</strong> ${weapon.damage1 || '1'}`;
-    if (weapon.damagemodifier) html += ` + ${weapon.damagemodifier}`;
-    html += `<br><strong>Type:</strong> ${weapon.damagetype || 'physical'}`;
-    html += `<br><strong>Range:</strong> ${weapon.range || '1'}m`;
-    html += `<br><strong>Hit Bonus:</strong> +${weapon.hitbonus || 0}`;
-    if (weapon.hitcheckskill) html += `<br><strong>Skill:</strong> ${weapon.hitcheckskill}`;
-    if (properties) html += `<br><strong>Properties:</strong> ${properties}`;
-    if (weapon.statuseffectX) html += `<br><strong>Status:</strong> ${weapon.statuseffectX}`;
-    
-    statsDiv.innerHTML = html;
+.damage-input-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin: 10px 0;
 }
 
-function updateArmorStats() {
-    const armor = getSelectedArmor();
-    const statsDiv = document.getElementById('armorStats');
-    
-    console.log('Updating armor stats:', armor);
-    
-    if (!armor) {
-        statsDiv.innerHTML = '<em>No armor selected</em>';
-        return;
-    }
-    
-    let html = `<strong>AC Bonus:</strong> +${armor.effectac || 0}`;
-    if (armor.debuffspeed) html += `<br><strong>Speed Penalty:</strong> -${armor.debuffspeed}m`;
-    
-    const reductions = [];
-    if (armor.damageRePhy) reductions.push(`Physical: ${armor.damageRePhy}`);
-    if (armor.damageReHe) reductions.push(`Heat: ${armor.damageReHe}`);
-    if (armor.damageReCo) reductions.push(`Cold: ${armor.damageReCo}`);
-    if (armor.damageReEl) reductions.push(`Electrical: ${armor.damageReEl}`);
-    if (armor.damageReCh) reductions.push(`Chemical: ${armor.damageReCh}`);
-    if (armor.damageReEx) reductions.push(`Explosive: ${armor.damageReEx}`);
-    if (armor.damageReLi) reductions.push(`Light: ${armor.damageReLi}`);
-    if (armor.damageReSo) reductions.push(`Sound: ${armor.damageReSo}`);
-    if (armor.damageReMe) reductions.push(`Memetic: ${armor.damageReMe}`);
-    if (armor.damageReAn) reductions.push(`Anomalous: ${armor.damageReAn}`);
-    
-    if (reductions.length > 0) {
-        html += `<br><strong>Damage Reduction:</strong><br>${reductions.join('<br>')}`;
-    }
-    
-    statsDiv.innerHTML = html;
+.info-display {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 10px 0;
 }
 
-function updateHelmetStats() {
-    const helmet = getSelectedHelmet();
-    const statsDiv = document.getElementById('helmetStats');
-    
-    console.log('Updating helmet stats:', helmet);
-    
-    if (!helmet) {
-        statsDiv.innerHTML = '<em>No helmet selected</em>';
-        return;
-    }
-    
-    let html = `<strong>AC Bonus:</strong> +${helmet.effectac || 0}`;
-    if (helmet.debuffspeed) html += `<br><strong>Speed Penalty:</strong> -${helmet.debuffspeed}m`;
-    
-    const reductions = [];
-    if (helmet.damageRePhy) reductions.push(`Physical: ${helmet.damageRePhy}`);
-    if (helmet.damageReHe) reductions.push(`Heat: ${helmet.damageReHe}`);
-    if (helmet.damageReCo) reductions.push(`Cold: ${helmet.damageReCo}`);
-    if (helmet.damageReEl) reductions.push(`Electrical: ${helmet.damageReEl}`);
-    if (helmet.damageReCh) reductions.push(`Chemical: ${helmet.damageReCh}`);
-    if (helmet.damageReEx) reductions.push(`Explosive: ${helmet.damageReEx}`);
-    if (helmet.damageReLi) reductions.push(`Light: ${helmet.damageReLi}`);
-    if (helmet.damageReSo) reductions.push(`Sound: ${helmet.damageReSo}`);
-    if (helmet.damageReMe) reductions.push(`Memetic: ${helmet.damageReMe}`);
-    if (helmet.damageReAn) reductions.push(`Anomalous: ${helmet.damageReAn}`);
-    
-    if (reductions.length > 0) {
-        html += `<br><strong>Damage Reduction:</strong><br>${reductions.join('<br>')}`;
-    }
-    
-    statsDiv.innerHTML = html;
+.info-item {
+    background: #1a1a1a;
+    padding: 10px 15px;
+    border-radius: 4px;
 }
 
-// Single DOMContentLoaded event listener
-document.addEventListener('DOMContentLoaded', function() {
-    init();
+.info-label {
+    color: #888;
+    font-size: 0.8em;
+}
+
+.info-value {
+    color: #4ecdc4;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.damage-reduction-display {
+    background: #1a1a1a;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+.damage-reduction-display strong {
+    color: #4ecdc4;
+}
+
+.equipment-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 1024px) {
+    .equipment-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.equipment-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.equipment-item .stat-group {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.equipment-item label {
+    min-width: auto;
+    margin-bottom: 5px;
+}
+
+.equipment-stats {
+    background: #1a1a1a;
+    padding: 10px;
+    border-radius: 4px;
+    min-height: 60px;
+    color: #aaa;
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+.equipment-stats:empty::before {
+    content: "No item selected";
+    color: #666;
+    font-style: italic;
+}
+
+.equipment-stats strong {
+    color: #4ecdc4;
+}
+
+.stats-skills-container {
+    display: flex;
+    gap: 20px;
+}
+
+.attributes-column {
+    flex: 0 0 250px; /* Adjusted width to make space for new buttons */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.attributes-column .section-title {
+    margin-bottom: 5px;
+}
+
+.attributes-column .stat-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.attributes-column label {
+    min-width: 50px;
+}
+
+.skills-column {
+    flex: 1;
+}
+
+.skills-column .section-title {
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    .stats-skills-container {
+        flex-direction: column;
+    }
     
-    const damageTypeSelect = document.getElementById('damageTypeSelect');
-    if (damageTypeSelect) {
-        damageTypeSelect.addEventListener('change', updateDamageReduction);
+    .attributes-column {
+        flex: 1;
+        flex-basis: auto; /* Reset basis for column layout */
     }
-});
+}
 
-function adjustStat(statId, amount) {
-    const input = document.getElementById(statId);
-    if (!input) return;
+.stats-skills-container {
+    display: flex;
+    gap: 20px;
+}
 
-    let value = parseInt(input.value, 10) || 0;
-    const min = parseInt(input.min, 10);
-    const max = parseInt(input.max, 10);
+.attributes-column {
+    flex: 0 0 250px;  /* Fixed width */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
-    value += amount;
+.skills-column {
+    flex: 1;  /* Takes remaining space */
+}
 
-    // Clamp the value within the min/max range
-    if (!isNaN(min) && value < min) {
-        value = min;
-    }
-    if (!isNaN(max) && value > max) {
-        value = max;
-    }
+/* Hide the default up/down arrows on number inputs */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield; /* For Firefox */
+}
 
-    input.value = value;
-    updateAll(); // This is crucial to keep the sheet updated
+/* New wrapper for the stat input and buttons */
+.stat-input-wrapper {
+    display: flex;
+    flex: 1;
+}
+
+.stat-input-wrapper input[type="number"] {
+    text-align: center;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    flex: 1; /* Allow input to grow */
+    min-width: 40px; /* Prevent it from becoming too small */
+}
+
+/* Style for the new plus/minus buttons */
+.stat-button {
+    background: #444;
+    border: 1px solid #555;
+    padding: 0;
+    width: 35px;
+    height: auto; /* Let it match the input height */
+    font-size: 1.2em;
+    font-weight: bold;
+    flex-shrink: 0; /* Prevent buttons from shrinking */
+}
+
+.stat-button:hover {
+    background: #555;
+}
+
+/* Add border radius to the outer buttons for a rounded look */
+.stat-input-wrapper .stat-button:first-child {
+    border-radius: 4px 0 0 4px;
+}
+
+.stat-input-wrapper .stat-button:last-child {
+    border-radius: 0 4px 4px 0;
+}
+
+/* Adjust the main stat-group flex properties */
+.attributes-column .stat-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.attributes-column .stat-group label {
+    flex: 0 0 50px; /* Give the label a fixed width */
+    min-width: 0;
+}
+
+/* Styles for Temporary Stat Buttons */
+.temp-stat-wrapper {
+    display: flex;
+}
+
+.temp-stat-button {
+    background: #444;
+    border: 1px solid #555;
+    padding: 0;
+    width: 28px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #ccc;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.temp-stat-button:hover {
+    background: #555;
+}
+
+.temp-stat-button:first-child {
+    border-radius: 4px 0 0 4px;
+}
+
+.temp-stat-button:last-child {
+    border-radius: 0 4px 4px 0;
+}
+
+.glow-green {
+    background: #20c997;
+    color: #fff;
+    box-shadow: 0 0 5px #20c997, 0 0 10px #20c997;
+    text-shadow: 0 0 2px #fff;
+}
+
+.glow-red {
+    background: #dc3545;
+    color: #fff;
+    box-shadow: 0 0 5px #dc3545, 0 0 10px #dc3545;
+    text-shadow: 0 0 2px #fff;
 }
