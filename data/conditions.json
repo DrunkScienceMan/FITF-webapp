@@ -1,0 +1,162 @@
+[
+  {
+    "id": "blinded",
+    "name": "Blinded",
+    "stackable": false,
+    "penalty": 1,
+    "bonus": 0,
+    "note": "Attacks –1 die, attacks vs you +1 die"
+  },
+  {
+    "id": "charmed",
+    "name": "Charmed",
+    "stackable": false,
+    "penalty": 0,
+    "bonus": 1,
+    "note": "Cannot harm charmer, charmer gets +1 die on interaction checks"
+  },
+  {
+    "id": "deafened",
+    "name": "Deafened",
+    "stackable": false,
+    "penalty": 1,
+    "bonus": 0,
+    "note": "Attacks –1 die, attacks vs you +1 die, fail hearing checks"
+  },
+  {
+    "id": "disoriented",
+    "name": "Disoriented",
+    "stackable": false,
+    "penalty": 1,
+    "bonus": 0,
+    "note": "All checks and attacks –1 die"
+  },
+  {
+    "id": "dominated",
+    "name": "Dominated",
+    "stackable": false,
+    "penalty": 0,
+    "bonus": 0,
+    "note": "Controller dictates your actions"
+  },
+  {
+    "id": "dying",
+    "name": "Dying",
+    "stackable": false,
+    "penalty": 0,
+    "bonus": 0,
+    "note": "Make Survival checks, die after 2 failures"
+  },
+  {
+    "id": "frightened",
+    "name": "Frightened",
+    "stackable": false,
+    "penalty": 1,
+    "bonus": 0,
+    "note": "Must fight/flee/fawn, all checks –1 die"
+  },
+  {
+    "id": "ignited",
+    "name": "Ignited",
+    "stackable": false,
+    "penalty": 0,
+    "bonus": 0,
+    "note": "Take 1d8 Heat Damage each turn"
+  },
+  {
+    "id": "incapacitated",
+    "name": "Incapacitated",
+    "stackable": false,
+    "penalty": 0,
+    "bonus": 0,
+    "note": "Cannot act, attacks vs you +1 die, all hits are critical"
+  },
+  {
+    "id": "insane",
+    "name": "Insane",
+    "stackable": false,
+    "penalty": 0,
+    "bonus": 0,
+    "note": "Unpredictable, prone to madness and dangerous behavior"
+  },
+  {
+    "id": "petrified",
+    "name": "Petrified",
+    "stackable": false,
+    "penalty": 0,
+    "bonus": 0,
+    "note": "Transformed to solid substance, take half damage"
+  },
+  {
+    "id": "poisoned",
+    "name": "Poisoned",
+    "stackable": false,
+    "penalty": 0,
+    "bonus": 0,
+    "note": "Take 1d6 Chemical Damage each turn"
+  },
+  {
+    "id": "prone",
+    "name": "Prone",
+    "stackable": false,
+    "penalty": 1,
+    "bonus": 0,
+    "note": "Attacks –1 die, attacks vs you +1 die, crawl movement"
+  },
+  {
+    "id": "reckless",
+    "name": "Reckless",
+    "stackable": true,
+    "penalty": 0,
+    "bonus": 1,
+    "note": "Your attacks +1 die, next enemy attack +1 die (stackable)"
+  },
+  {
+    "id": "restrained",
+    "name": "Restrained",
+    "stackable": false,
+    "penalty": 0,
+    "bonus": 0,
+    "note": "Speed 0, cannot use Speed actions, attacks vs you +1 die"
+  },
+  {
+    "id": "slowed",
+    "name": "Slowed",
+    "stackable": false,
+    "penalty": 0,
+    "bonus": 0,
+    "note": "Speed halved (rounded down)"
+  },
+  {
+    "id": "stunned",
+    "name": "Stunned",
+    "stackable": false,
+    "penalty": 0,
+    "bonus": 0,
+    "note": "Actions per turn halved (rounded down)"
+  },
+  {
+    "id": "unconscious",
+    "name": "Unconscious",
+    "stackable": false,
+    "penalty": 0,
+    "bonus": 0,
+    "note": "Cannot act, attacks vs you +1 die, all hits are critical"
+  },
+  {
+    "id": "weakened",
+    "name": "Weakened",
+    "stackable": false,
+    "penalty": 1,
+    "bonus": 0,
+    "note": "Resistance checks vs status effects –1 die"
+  },
+  {
+    "id": "vanished",
+    "name": "Vanished",
+    "stackable": false,
+    "penalty": 0,
+    "bonus": 0,
+    "note": "Teleported or disappeared, effects vary"
+  }
+]

@@ -10,7 +10,6 @@
     <div class="container">
         <h1>⚠ Fear in the Foundation ⚠</h1>
 
-        <!-- Health & Combat -->
         <div class="section">
             <div class="section-title">Combat Status</div>
             <div class="health-bar-container">
@@ -30,7 +29,14 @@
                 </div>
             </div>
             <div class="damage-input-group">
-                <input type="number" id="damageInput" placeholder="Damage amount" min="0" style="width: 150px;">
+                <div class="stat-group">
+                    <label>Damage Amount:</label>
+                    <div class="stat-input-wrapper">
+                        <button class="stat-button" onclick="adjustDamage(-1)">-</button>
+                        <input type="number" id="damageInput" placeholder="0" min="0" style="text-align: center;">
+                        <button class="stat-button" onclick="adjustDamage(1)">+</button>
+                    </div>
+                </div>
                 <select id="damageTypeSelect" style="width: 180px;">
                     <option value="physical">Physical</option>
                     <option value="heat">Heat</option>
@@ -64,38 +70,6 @@
             </div>
         </div>
 
-        <!-- Stats -->
-        <div class="section">
-            <div class="section-title">Attributes</div>
-            <div class="grid">
-                <div class="stat-group">
-                    <label>STR:</label>
-                    <input type="number" id="STR" value="0" min="-3" max="5" onchange="updateAll()">
-                </div>
-                <div class="stat-group">
-                    <label>AGI:</label>
-                    <input type="number" id="AGI" value="0" min="-3" max="5" onchange="updateAll()">
-                </div>
-                <div class="stat-group">
-                    <label>DUR:</label>
-                    <input type="number" id="DUR" value="0" min="-3" max="5" onchange="updateAll()">
-                </div>
-                <div class="stat-group">
-                    <label>KNO:</label>
-                    <input type="number" id="KNO" value="0" min="-3" max="5" onchange="updateAll()">
-                </div>
-                <div class="stat-group">
-                    <label>POW:</label>
-                    <input type="number" id="POW" value="0" min="-3" max="5" onchange="updateAll()">
-                </div>
-                <div class="stat-group">
-                    <label>CHA:</label>
-                    <input type="number" id="CHA" value="0" min="-3" max="5" onchange="updateAll()">
-                </div>
-            </div>
-        </div>
-
-        <!-- Class Selection -->
         <div class="section">
             <div class="section-title">Class & Subclass</div>
             <div class="grid">
@@ -116,15 +90,97 @@
                     <input type="number" id="level" value="1" min="1" max="20" onchange="updateAll()">
                 </div>
             </div>
+            <!-- Add class and subclass bonus displays -->
+            <div class="bonus-display-container">
+                <div class="bonus-display" id="classBonuses"></div>
+                <div class="bonus-display" id="subclassBonuses"></div>
+            </div>
         </div>
 
-        <!-- Skills -->
-        <div class="section">
-            <div class="section-title">Skills</div>
-            <div class="skill-grid" id="skillsGrid"></div>
+              <div class="section">
+            <div class="stats-skills-container">
+                <div class="attributes-column">
+                    <div class="section-title">Attributes</div>
+                    <div class="stat-group">
+                        <label>STR:</label>
+                        <div class="stat-input-wrapper">
+                            <button class="stat-button" onclick="adjustStat('STR', -1)">-</button>
+                            <input type="number" id="STR" value="0" min="-3" max="5" onchange="updateAll()">
+                            <button class="stat-button" onclick="adjustStat('STR', 1)">+</button>
+                        </div>
+                        <div class="temp-stat-wrapper">
+                            <button class="temp-stat-button" id="temp-STR-minus" onclick="adjustTempStat('STR', -1)">-</button>
+                            <button class="temp-stat-button" id="temp-STR-plus" onclick="adjustTempStat('STR', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="stat-group">
+                        <label>AGI:</label>
+                        <div class="stat-input-wrapper">
+                            <button class="stat-button" onclick="adjustStat('AGI', -1)">-</button>
+                            <input type="number" id="AGI" value="0" min="-3" max="5" onchange="updateAll()">
+                            <button class="stat-button" onclick="adjustStat('AGI', 1)">+</button>
+                        </div>
+                        <div class="temp-stat-wrapper">
+                            <button class="temp-stat-button" id="temp-AGI-minus" onclick="adjustTempStat('AGI', -1)">-</button>
+                            <button class="temp-stat-button" id="temp-AGI-plus" onclick="adjustTempStat('AGI', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="stat-group">
+                        <label>DUR:</label>
+                        <div class="stat-input-wrapper">
+                            <button class="stat-button" onclick="adjustStat('DUR', -1)">-</button>
+                            <input type="number" id="DUR" value="0" min="-3" max="5" onchange="updateAll()">
+                            <button class="stat-button" onclick="adjustStat('DUR', 1)">+</button>
+                        </div>
+                        <div class="temp-stat-wrapper">
+                            <button class="temp-stat-button" id="temp-DUR-minus" onclick="adjustTempStat('DUR', -1)">-</button>
+                            <button class="temp-stat-button" id="temp-DUR-plus" onclick="adjustTempStat('DUR', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="stat-group">
+                        <label>KNO:</label>
+                        <div class="stat-input-wrapper">
+                            <button class="stat-button" onclick="adjustStat('KNO', -1)">-</button>
+                            <input type="number" id="KNO" value="0" min="-3" max="5" onchange="updateAll()">
+                            <button class="stat-button" onclick="adjustStat('KNO', 1)">+</button>
+                        </div>
+                        <div class="temp-stat-wrapper">
+                            <button class="temp-stat-button" id="temp-KNO-minus" onclick="adjustTempStat('KNO', -1)">-</button>
+                            <button class="temp-stat-button" id="temp-KNO-plus" onclick="adjustTempStat('KNO', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="stat-group">
+                        <label>POW:</label>
+                        <div class="stat-input-wrapper">
+                            <button class="stat-button" onclick="adjustStat('POW', -1)">-</button>
+                            <input type="number" id="POW" value="0" min="-3" max="5" onchange="updateAll()">
+                            <button class="stat-button" onclick="adjustStat('POW', 1)">+</button>
+                        </div>
+                        <div class="temp-stat-wrapper">
+                            <button class="temp-stat-button" id="temp-POW-minus" onclick="adjustTempStat('POW', -1)">-</button>
+                            <button class="temp-stat-button" id="temp-POW-plus" onclick="adjustTempStat('POW', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="stat-group">
+                        <label>CHA:</label>
+                        <div class="stat-input-wrapper">
+                            <button class="stat-button" onclick="adjustStat('CHA', -1)">-</button>
+                            <input type="number" id="CHA" value="0" min="-3" max="5" onchange="updateAll()">
+                            <button class="stat-button" onclick="adjustStat('CHA', 1)">+</button>
+                        </div>
+                         <div class="temp-stat-wrapper">
+                            <button class="temp-stat-button" id="temp-CHA-minus" onclick="adjustTempStat('CHA', -1)">-</button>
+                            <button class="temp-stat-button" id="temp-CHA-plus" onclick="adjustTempStat('CHA', 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="skills-column">
+                    <div class="section-title">Skills</div>
+                    <div class="skill-grid" id="skillsGrid"></div>
+                </div>
+            </div>
         </div>
 
-        <!-- Equipment -->
         <div class="section">
             <div class="section-title">Equipment</div>
             <div class="equipment-grid">
@@ -157,6 +213,22 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- ===== CONDITIONS ===== -->
+    <div class="section">
+    <div class="section-title">Conditions</div>
+
+    <div class="condition-controls">
+        <select id="conditionSelect">
+        <option value="">— Add condition —</option>
+        </select>
+        <button onclick="addCondition()">➕ Add</button>
+    </div>
+
+    <ul id="conditionList" class="condition-list"></ul>
+
+    <div id="conditionSummary" class="condition-summary"></div>
     </div>
 
     <script src="js/dice.js"></script>
