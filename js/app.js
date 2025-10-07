@@ -296,3 +296,15 @@ document.addEventListener('DOMContentLoaded', function() {
         damageTypeSelect.addEventListener('change', updateDamageReduction);
     }
 });
+
+function updateAll() {
+    updateSkills();
+    updateHP();
+    updateAC();
+    updateSpeed();
+    updateWeaponInfo();
+    updateEquipmentStats();
+    updateHealthBar();
+    updateDamageReduction();
+    saveCharacter();
+}
