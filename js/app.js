@@ -267,9 +267,97 @@ function updateAll() {
     updateEquipmentStats();
     updateHealthBar();
     updateDamageReduction();
+    updateClassAndSubclassBonuses();
     updateTempStatButtons();
     saveCharacter();
 }
+
+function updateClassAndSubclassBonuses() {
+    updateClassBonuses();
+    updateSubclassBonuses();
+}
+
+function updateClassBonuses() {
+    const classElem = getSelectedClass();
+    const bonusDisplay = document.getElementById('classBonuses');
+    
+    if (!classElem) {
+        bonusDisplay.innerHTML = '<em>No class selected</em>';
+        return;
+    }
+    
+    let html = `<strong>${classElem.name} Bonuses:</strong>`;
+    html += `<ul>`;
+    
+    if (classElem.startingHP) {
+        html += `<li><strong>Starting HP:</strong> ${classElem.startingHP}</li>`;
+    }
+    
+    if (classElem.naturalAC) {
+        html += `<li><strong>Natural AC:</strong> ${classElem.naturalAC}</li>`;
+    }
+    
+    if (classElem.speed) {
+        html += `<li><strong>Speed:</strong> ${classElem.speed}m</li>`;
+    }
+    
+    if (classElem.startingSkills && classElem.startingSkills.length > 0) {
+        html += `<li><strong>Starting Skills:</strong> ${classElem.startingSkills.join(', ')}</li>`;
+    }
+    
+    if (classElem.abilities && classElem.abilities.length > 0) {
+        html += `<li><strong>Abilities:</strong> ${classElem.abilities.join(', ')}</li>`;
+    }
+    
+    /* ----- NEW: show classbonus1 ----- */
+    if (Array.isArray(classElem.classbonus1) && classElem.classbonus1.length) {
+        html += `<li><strong>Class Bonus 1:</strong> ${classElem.classbonus1.join('; ')}</li>`;
+    }
+
+    /* ----- NEW: show classbonus2 ----- */
+    if (Array.isArray(classElem.classbonus2) && classElem.classbonus2.length) {
+        html += `<li><strong>Class Bonus 2:</strong> ${classElem.classbonus2.join('; ')}</li>`;
+    }
+
+    html += `</ul>`;
+    bonusDisplay.innerHTML = html;
+}
+
+function updateSubclassBonuses() {
+    const subclassElem = getSelectedSubclass();
+    const bonusDisplay = document.getElementById('subclassBonuses');
+    
+    if (!subclassElem) {
+        bonusDisplay.innerHTML = '<em>No subclass selected</em>';
+        return;
+    }
+    
+    let html = `<strong>${subclassElem.name} Bonuses:</strong>`;
+    /* ---------- 1.  Simple scalar fields ---------- */
+    if (Number.isFinite(subclassElem.HPbonus))
+        html += `<li><strong>HP Bonus per Level:</strong> +${subclassElem.HPbonus}</li>`;
+
+    /* ---------- 2.  Ability lines (1-3) ---------- */
+    ['abilityX', 'abilityY', 'abilityZ'].forEach((key, idx) => {
+        if (subclassElem[key]) {
+            html += `<li><strong>Ability ${idx + 1}:</strong> ${subclassElem[key]}</li>`;
+        }
+    });
+
+    /* ---------- 3.  Everything else (dynamic) ---------- */
+    const alreadyShown = ['name', 'HPbonus', 'abilityX', 'abilityY', 'abilityZ'];
+    Object.keys(subclassElem)
+        .filter(k => !alreadyShown.includes(k) && subclassElem[k] != null)
+        .forEach(k => {
+            const nice = k.replace(/([A-Z])/g, ' $1') // camelCase → human
+                         .replace(/^./, str => str.toUpperCase());
+            html += `<li><strong>${nice}:</strong> ${subclassElem[k]}</li>`;
+        });
+
+    html += `</ul>`;
+    bonusDisplay.innerHTML = html;
+}
+
 
 function updateEquipmentStats() {
     console.log('Updating equipment stats...');
