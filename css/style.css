@@ -74,6 +74,11 @@ select {
     flex: 1;
 }
 
+select option {
+    white-space: normal;
+    word-wrap: break-word;
+}
+
 input[type="number"]:focus,
 select:focus {
     outline: none;
@@ -228,3 +233,4 @@ button:active {
 .damage-reduction-display strong {
     color: #4ecdc4;
 }
+
