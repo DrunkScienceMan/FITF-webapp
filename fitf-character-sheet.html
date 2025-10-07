@@ -127,24 +127,33 @@
         <!-- Equipment -->
         <div class="section">
             <div class="section-title">Equipment</div>
-            <div class="grid">
-                <div class="stat-group">
-                    <label>Weapon:</label>
-                    <select id="weaponSelect" onchange="updateAll()">
-                        <option value="">Select Weapon</option>
-                    </select>
+            <div class="equipment-grid">
+                <div class="equipment-item">
+                    <div class="stat-group">
+                        <label>Weapon:</label>
+                        <select id="weaponSelect" onchange="updateAll()">
+                            <option value="">Select Weapon</option>
+                        </select>
+                    </div>
+                    <div class="equipment-stats" id="weaponStats"></div>
                 </div>
-                <div class="stat-group">
-                    <label>Armor:</label>
-                    <select id="armorSelect" onchange="updateAll()">
-                        <option value="">Select Armor</option>
-                    </select>
+                <div class="equipment-item">
+                    <div class="stat-group">
+                        <label>Armor:</label>
+                        <select id="armorSelect" onchange="updateAll()">
+                            <option value="">Select Armor</option>
+                        </select>
+                    </div>
+                    <div class="equipment-stats" id="armorStats"></div>
                 </div>
-                <div class="stat-group">
-                    <label>Helmet:</label>
-                    <select id="helmetSelect" onchange="updateAll()">
-                        <option value="">Select Helmet</option>
-                    </select>
+                <div class="equipment-item">
+                    <div class="stat-group">
+                        <label>Helmet:</label>
+                        <select id="helmetSelect" onchange="updateAll()">
+                            <option value="">Select Helmet</option>
+                        </select>
+                    </div>
+                    <div class="equipment-stats" id="helmetStats"></div>
                 </div>
             </div>
             <div class="weapon-info" id="weaponInfo"></div>
