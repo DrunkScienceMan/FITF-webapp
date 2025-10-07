@@ -82,6 +82,7 @@ function renderSkills() {
         const value = document.createElement('span');
         value.className = 'skill-value';
         value.id = `skill-${skill}`;
+        value.textContent = getSkillValue(skill);
 
         // Make the entire skill item clickable
         div.onclick = () => {
