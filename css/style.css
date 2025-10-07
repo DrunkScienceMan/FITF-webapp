@@ -543,3 +543,12 @@ input[type=number] {
 .bonus-display li {
     margin-bottom: 3px;
 }
+
+.condition-controls{display:flex;gap:10px;margin-bottom:10px}
+.condition-list{list-style:none;padding:0}
+.condition-item{background:#1a1a1a;border:1px solid #444;border-radius:4px;padding:8px 12px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+.condition-item span{font-weight:bold}
+.condition-item small{color:#aaa;margin-left:8px}
+.condition-item button{background:#dc3545;padding:2px 8px;font-size:.9em}
+.condition-summary{background:#1a1a1a;padding:10px;border-left:3px solid #ff6b6b;margin-top:10px;font-size:.9em;color:#ccc}
+.condition-summary strong{color:#4ecdc4}
