@@ -283,15 +283,54 @@ function updateWeaponStats() {
         return;
     }
     
+    // Initialize custom stats if not exists
+    if (!character.customWeaponStats) character.customWeaponStats = {};
+    if (!character.customWeaponStats[weapon.id]) {
+        character.customWeaponStats[weapon.id] = {
+            damage1: weapon.damage1 || 1,
+            damagemodifier: weapon.damagemodifier || '',
+            hitbonus: weapon.hitbonus || 0,
+            range: weapon.range || 1
+        };
+    }
+    
+    const custom = character.customWeaponStats[weapon.id];
     const properties = Array.isArray(weapon.weaponproperty) 
         ? weapon.weaponproperty.join(', ') 
         : weapon.weaponproperty || '';
     
-    let html = `<strong>Damage:</strong> ${weapon.damage1 || '1'}`;
-    if (weapon.damagemodifier) html += ` + ${weapon.damagemodifier}`;
+    let html = `
+        <div style="display: flex; align-items: center; gap: 5px; margin: 3px 0;">
+            <strong>Damage:</strong> 
+            <input type="text" id="weaponDamage1" value="${custom.damage1}" 
+                   style="width: 50px;" onchange="updateCustomWeaponStat('damage1', this.value)">
+        </div>`;
+    
+    if (weapon.damagemodifier !== undefined) {
+        html += `
+        <div style="display: flex; align-items: center; gap: 5px; margin: 3px 0;">
+            <strong>Damage Mod:</strong> 
+            <input type="text" id="weaponDamageMod" value="${custom.damagemodifier}" 
+                   style="width: 50px;" onchange="updateCustomWeaponStat('damagemodifier', this.value)">
+        </div>`;
+    }
+    
     html += `<br><strong>Type:</strong> ${weapon.damagetype || 'physical'}`;
-    html += `<br><strong>Range:</strong> ${weapon.range || '1'}m`;
-    html += `<br><strong>Hit Bonus:</strong> +${weapon.hitbonus || 0}`;
+    
+    html += `
+        <div style="display: flex; align-items: center; gap: 5px; margin: 3px 0;">
+            <strong>Range:</strong> 
+            <input type="number" id="weaponRange" value="${custom.range}" 
+                   style="width: 50px;" onchange="updateCustomWeaponStat('range', this.value)">m
+        </div>`;
+    
+    html += `
+        <div style="display: flex; align-items: center; gap: 5px; margin: 3px 0;">
+            <strong>Hit Bonus:</strong> +
+            <input type="number" id="weaponHitBonus" value="${custom.hitbonus}" 
+                   style="width: 50px;" onchange="updateCustomWeaponStat('hitbonus', this.value)">
+        </div>`;
+    
     if (weapon.hitcheckskill) html += `<br><strong>Skill:</strong> ${weapon.hitcheckskill}`;
     if (properties) html += `<br><strong>Properties:</strong> ${properties}`;
     if (weapon.statuseffectX) html += `<br><strong>Status:</strong> ${weapon.statuseffectX}`;
