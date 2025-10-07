@@ -72,6 +72,9 @@ function renderSkills() {
     Object.keys(character.skills).forEach(skill => {
         const div = document.createElement('div');
         div.className = 'skill-item';
+        if (character.skills[skill].focus) {
+            div.classList.add('skill-focused');
+        }
 
         const label = document.createElement('span');
         label.textContent = skill;
@@ -80,22 +83,20 @@ function renderSkills() {
         value.className = 'skill-value';
         value.id = `skill-${skill}`;
 
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.className = 'focus-toggle';
-        checkbox.checked = character.skills[skill].focus;
-        checkbox.onchange = () => {
-            character.skills[skill].focus = checkbox.checked;
+        // Make the entire skill item clickable
+        div.onclick = () => {
+            character.skills[skill].focus = !character.skills[skill].focus;
+            div.classList.toggle('skill-focused');
             updateAll();
             saveCharacter();
         };
 
         div.appendChild(label);
         div.appendChild(value);
-        div.appendChild(checkbox);
         grid.appendChild(div);
     });
 }
+
 
 function updateDamageReduction() {
     const damageType = document.getElementById('damageTypeSelect').value;
