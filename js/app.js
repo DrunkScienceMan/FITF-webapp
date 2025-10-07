@@ -291,7 +291,6 @@ function updateAll() {
     updateHP();
     updateAC();
     updateSpeed();
-    updateWeaponInfo();
     updateEquipmentStats();
     updateHealthBar();
     updateDamageReduction();
