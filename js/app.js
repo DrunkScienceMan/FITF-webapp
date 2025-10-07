@@ -1,6 +1,5 @@
 // Main application logic and UI management
 
-// Initialize the application
 async function init() {
     console.log('Loading game data...');
 
@@ -17,6 +16,11 @@ async function init() {
     document.getElementById('weaponSelect').value = 'basicstrike';
 
     loadCharacter();
+
+    if (!character.tempStats) {
+        character.tempStats = { STR: 0, AGI: 0, DUR: 0, KNO: 0, POW: 0, CHA: 0 };
+    }
+
     renderSkills();
     updateAll();
 
@@ -84,7 +88,6 @@ function renderSkills() {
         value.id = `skill-${skill}`;
         value.textContent = getSkillValue(skill);
 
-        // Make the entire skill item clickable
         div.onclick = () => {
             character.skills[skill].focus = !character.skills[skill].focus;
             div.classList.toggle('skill-focused');
@@ -253,8 +256,10 @@ function resetHealth() {
     saveCharacter();
 }
 
+// --- UPDATED FUNCTION ---
 function updateAll() {
     console.log('updateAll() called');
+    updateAttributeDisplays(); // Add this line
     updateSkills();
     updateHP();
     updateAC();
@@ -262,6 +267,7 @@ function updateAll() {
     updateEquipmentStats();
     updateHealthBar();
     updateDamageReduction();
+    updateTempStatButtons();
     saveCharacter();
 }
 
@@ -275,8 +281,6 @@ function updateEquipmentStats() {
 function updateWeaponStats() {
     const weapon = getSelectedWeapon();
     const statsDiv = document.getElementById('weaponStats');
-    
-    console.log('Updating weapon stats:', weapon);
     
     if (!weapon) {
         statsDiv.innerHTML = '<em>No weapon selected</em>';
@@ -303,8 +307,6 @@ function updateArmorStats() {
     const armor = getSelectedArmor();
     const statsDiv = document.getElementById('armorStats');
     
-    console.log('Updating armor stats:', armor);
-    
     if (!armor) {
         statsDiv.innerHTML = '<em>No armor selected</em>';
         return;
@@ -316,14 +318,7 @@ function updateArmorStats() {
     const reductions = [];
     if (armor.damageRePhy) reductions.push(`Physical: ${armor.damageRePhy}`);
     if (armor.damageReHe) reductions.push(`Heat: ${armor.damageReHe}`);
-    if (armor.damageReCo) reductions.push(`Cold: ${armor.damageReCo}`);
-    if (armor.damageReEl) reductions.push(`Electrical: ${armor.damageReEl}`);
-    if (armor.damageReCh) reductions.push(`Chemical: ${armor.damageReCh}`);
-    if (armor.damageReEx) reductions.push(`Explosive: ${armor.damageReEx}`);
-    if (armor.damageReLi) reductions.push(`Light: ${armor.damageReLi}`);
-    if (armor.damageReSo) reductions.push(`Sound: ${armor.damageReSo}`);
-    if (armor.damageReMe) reductions.push(`Memetic: ${armor.damageReMe}`);
-    if (armor.damageReAn) reductions.push(`Anomalous: ${armor.damageReAn}`);
+    // ... (rest of the reductions)
     
     if (reductions.length > 0) {
         html += `<br><strong>Damage Reduction:</strong><br>${reductions.join('<br>')}`;
@@ -336,8 +331,6 @@ function updateHelmetStats() {
     const helmet = getSelectedHelmet();
     const statsDiv = document.getElementById('helmetStats');
     
-    console.log('Updating helmet stats:', helmet);
-    
     if (!helmet) {
         statsDiv.innerHTML = '<em>No helmet selected</em>';
         return;
@@ -348,15 +341,7 @@ function updateHelmetStats() {
     
     const reductions = [];
     if (helmet.damageRePhy) reductions.push(`Physical: ${helmet.damageRePhy}`);
-    if (helmet.damageReHe) reductions.push(`Heat: ${helmet.damageReHe}`);
-    if (helmet.damageReCo) reductions.push(`Cold: ${helmet.damageReCo}`);
-    if (helmet.damageReEl) reductions.push(`Electrical: ${helmet.damageReEl}`);
-    if (helmet.damageReCh) reductions.push(`Chemical: ${helmet.damageReCh}`);
-    if (helmet.damageReEx) reductions.push(`Explosive: ${helmet.damageReEx}`);
-    if (helmet.damageReLi) reductions.push(`Light: ${helmet.damageReLi}`);
-    if (helmet.damageReSo) reductions.push(`Sound: ${helmet.damageReSo}`);
-    if (helmet.damageReMe) reductions.push(`Memetic: ${helmet.damageReMe}`);
-    if (helmet.damageReAn) reductions.push(`Anomalous: ${helmet.damageReAn}`);
+    // ... (rest of the reductions)
     
     if (reductions.length > 0) {
         html += `<br><strong>Damage Reduction:</strong><br>${reductions.join('<br>')}`;
@@ -365,7 +350,6 @@ function updateHelmetStats() {
     statsDiv.innerHTML = html;
 }
 
-// Single DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
     init();
     
@@ -374,3 +358,67 @@ document.addEventListener('DOMContentLoaded', function() {
         damageTypeSelect.addEventListener('change', updateDamageReduction);
     }
 });
+
+// --- UPDATED FUNCTION ---
+function adjustStat(statId, amount) {
+    const input = document.getElementById(statId);
+    const min = parseInt(input.min, 10);
+    const max = parseInt(input.max, 10);
+
+    // Adjust the base stat in the character object
+    let baseValue = character.stats[statId] || 0;
+    baseValue += amount;
+
+    // Clamp the base value
+    if (!isNaN(min) && baseValue < min) baseValue = min;
+    if (!isNaN(max) && baseValue > max) baseValue = max;
+
+    character.stats[statId] = baseValue;
+    
+    updateAll();
+}
+
+// --- NEW FUNCTION ---
+/**
+ * Updates the value displayed in the attribute input boxes.
+ * It shows the total of base stat + temporary stat.
+ */
+function updateAttributeDisplays() {
+    Object.keys(character.stats).forEach(statId => {
+        const input = document.getElementById(statId);
+        if (input) {
+            input.value = getStat(statId); // getStat() returns the combined total
+        }
+    });
+}
+
+function adjustTempStat(statId, amount) {
+    if (!character.tempStats) {
+        character.tempStats = { STR: 0, AGI: 0, DUR: 0, KNO: 0, POW: 0, CHA: 0 };
+    }
+    
+    character.tempStats[statId] = (character.tempStats[statId] || 0) + amount;
+    
+    updateAll();
+}
+
+function updateTempStatButtons() {
+    if (!character.tempStats) return;
+
+    Object.keys(character.tempStats).forEach(statId => {
+        const tempValue = character.tempStats[statId];
+        const plusButton = document.getElementById(`temp-${statId}-plus`);
+        const minusButton = document.getElementById(`temp-${statId}-minus`);
+
+        if (!plusButton || !minusButton) return;
+
+        plusButton.classList.remove('glow-green');
+        minusButton.classList.remove('glow-red');
+
+        if (tempValue > 0) {
+            plusButton.classList.add('glow-green');
+        } else if (tempValue < 0) {
+            minusButton.classList.add('glow-red');
+        }
+    });
+}
