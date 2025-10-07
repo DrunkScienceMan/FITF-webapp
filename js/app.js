@@ -308,3 +308,96 @@ function updateAll() {
     updateDamageReduction();
     saveCharacter();
 }
+
+function updateEquipmentStats() {
+    updateWeaponStats();
+    updateArmorStats();
+    updateHelmetStats();
+}
+
+function updateWeaponStats() {
+    const weapon = getSelectedWeapon();
+    const statsDiv = document.getElementById('weaponStats');
+    
+    if (!weapon) {
+        statsDiv.innerHTML = '';
+        return;
+    }
+    
+    const properties = Array.isArray(weapon.weaponproperty) 
+        ? weapon.weaponproperty.join(', ') 
+        : weapon.weaponproperty || '';
+    
+    let html = `<strong>Damage:</strong> ${weapon.damage1 || '1'}`;
+    if (weapon.damagemodifier) html += ` + ${weapon.damagemodifier}`;
+    html += `<br><strong>Type:</strong> ${weapon.damagetype || 'physical'}`;
+    html += `<br><strong>Range:</strong> ${weapon.range || '1'}m`;
+    html += `<br><strong>Hit Bonus:</strong> +${weapon.hitbonus || 0}`;
+    if (weapon.hitcheckskill) html += `<br><strong>Skill:</strong> ${weapon.hitcheckskill}`;
+    if (properties) html += `<br><strong>Properties:</strong> ${properties}`;
+    if (weapon.statuseffectX) html += `<br><strong>Status:</strong> ${weapon.statuseffectX}`;
+    
+    statsDiv.innerHTML = html;
+}
+
+function updateArmorStats() {
+    const armor = getSelectedArmor();
+    const statsDiv = document.getElementById('armorStats');
+    
+    if (!armor) {
+        statsDiv.innerHTML = '';
+        return;
+    }
+    
+    let html = `<strong>AC Bonus:</strong> +${armor.effectac || 0}`;
+    if (armor.debuffspeed) html += `<br><strong>Speed Penalty:</strong> -${armor.debuffspeed}m`;
+    
+    const reductions = [];
+    if (armor.damageRePhy) reductions.push(`Physical: ${armor.damageRePhy}`);
+    if (armor.damageReHe) reductions.push(`Heat: ${armor.damageReHe}`);
+    if (armor.damageReCo) reductions.push(`Cold: ${armor.damageReCo}`);
+    if (armor.damageReEl) reductions.push(`Electrical: ${armor.damageReEl}`);
+    if (armor.damageReCh) reductions.push(`Chemical: ${armor.damageReCh}`);
+    if (armor.damageReEx) reductions.push(`Explosive: ${armor.damageReEx}`);
+    if (armor.damageReLi) reductions.push(`Light: ${armor.damageReLi}`);
+    if (armor.damageReSo) reductions.push(`Sound: ${armor.damageReSo}`);
+    if (armor.damageReMe) reductions.push(`Memetic: ${armor.damageReMe}`);
+    if (armor.damageReAn) reductions.push(`Anomalous: ${armor.damageReAn}`);
+    
+    if (reductions.length > 0) {
+        html += `<br><strong>Damage Reduction:</strong><br>${reductions.join('<br>')}`;
+    }
+    
+    statsDiv.innerHTML = html;
+}
+
+function updateHelmetStats() {
+    const helmet = getSelectedHelmet();
+    const statsDiv = document.getElementById('helmetStats');
+    
+    if (!helmet) {
+        statsDiv.innerHTML = '';
+        return;
+    }
+    
+    let html = `<strong>AC Bonus:</strong> +${helmet.effectac || 0}`;
+    if (helmet.debuffspeed) html += `<br><strong>Speed Penalty:</strong> -${helmet.debuffspeed}m`;
+    
+    const reductions = [];
+    if (helmet.damageRePhy) reductions.push(`Physical: ${helmet.damageRePhy}`);
+    if (helmet.damageReHe) reductions.push(`Heat: ${helmet.damageReHe}`);
+    if (helmet.damageReCo) reductions.push(`Cold: ${helmet.damageReCo}`);
+    if (helmet.damageReEl) reductions.push(`Electrical: ${helmet.damageReEl}`);
+    if (helmet.damageReCh) reductions.push(`Chemical: ${helmet.damageReCh}`);
+    if (helmet.damageReEx) reductions.push(`Explosive: ${helmet.damageReEx}`);
+    if (helmet.damageReLi) reductions.push(`Light: ${helmet.damageReLi}`);
+    if (helmet.damageReSo) reductions.push(`Sound: ${helmet.damageReSo}`);
+    if (helmet.damageReMe) reductions.push(`Memetic: ${helmet.damageReMe}`);
+    if (helmet.damageReAn) reductions.push(`Anomalous: ${helmet.damageReAn}`);
+    
+    if (reductions.length > 0) {
+        html += `<br><strong>Damage Reduction:</strong><br>${reductions.join('<br>')}`;
+    }
+    
+    statsDiv.innerHTML = html;
+}
