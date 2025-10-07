@@ -282,3 +282,58 @@ button:active {
 .equipment-stats strong {
     color: #4ecdc4;
 }
+
+.skill-item {
+    background: #1a1a1a;
+    padding: 10px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.skill-item:hover {
+    background: #252525;
+    border-color: #444;
+}
+
+.skill-item.skill-focused {
+    background: linear-gradient(135deg, #1a3a3a, #1a1a2a);
+    border-color: #4ecdc4;
+    box-shadow: 0 0 15px rgba(78, 205, 196, 0.5),
+                0 0 30px rgba(78, 205, 196, 0.3),
+                inset 0 0 10px rgba(78, 205, 196, 0.2);
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.skill-item.skill-focused:hover {
+    box-shadow: 0 0 20px rgba(78, 205, 196, 0.7),
+                0 0 40px rgba(78, 205, 196, 0.4),
+                inset 0 0 15px rgba(78, 205, 196, 0.3);
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 0 15px rgba(78, 205, 196, 0.5),
+                    0 0 30px rgba(78, 205, 196, 0.3),
+                    inset 0 0 10px rgba(78, 205, 196, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(78, 205, 196, 0.7),
+                    0 0 40px rgba(78, 205, 196, 0.5),
+                    inset 0 0 15px rgba(78, 205, 196, 0.3);
+    }
+}
+
+.skill-value {
+    color: #4ecdc4;
+    font-weight: bold;
+}
+
+.skill-item.skill-focused .skill-value {
+    color: #6effef;
+    text-shadow: 0 0 5px rgba(78, 205, 196, 0.8);
+}
