@@ -97,17 +97,6 @@ function renderSkills() {
     });
 }
 
-function updateAll() {
-    updateSkills();
-    updateHP();
-    updateAC();
-    updateSpeed();
-    updateWeaponInfo();
-    updateHealthBar();
-    updateDamageReduction();
-    saveCharacter();
-}
-
 function updateDamageReduction() {
     const damageType = document.getElementById('damageTypeSelect').value;
     const reduction = calculateDamageReduction(damageType);
