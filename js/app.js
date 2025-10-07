@@ -324,38 +324,40 @@ function updateClassBonuses() {
 }
 
 function updateSubclassBonuses() {
-    const subclassElem = getSelectedSubclass();
-    const bonusDisplay = document.getElementById('subclassBonuses');
-    
-    if (!subclassElem) {
-        bonusDisplay.innerHTML = '<em>No subclass selected</em>';
+    const sub = getSelectedSubclass();
+    const box = document.getElementById('subclassBonuses');
+
+    if (!sub) {
+        box.innerHTML = '<em>No subclass selected</em>';
         return;
     }
-    
-    let html = `<strong>${subclassElem.name} Bonuses:</strong>`;
-    /* ---------- 1.  Simple scalar fields ---------- */
-    if (Number.isFinite(subclassElem.HPbonus))
-        html += `<li><strong>HP Bonus per Level:</strong> +${subclassElem.HPbonus}</li>`;
 
-    /* ---------- 2.  Ability lines (1-3) ---------- */
-    ['abilityX', 'abilityY', 'abilityZ'].forEach((key, idx) => {
-        if (subclassElem[key]) {
-            html += `<li><strong>Ability ${idx + 1}:</strong> ${subclassElem[key]}</li>`;
-        }
+    let html = `<strong>${sub.name} Bonuses:</strong><ul>`;
+
+    // 1.  well-known numeric bonus
+    if (Number.isFinite(sub.HPbonus))
+        html += `<li><strong>HP Bonus per Level:</strong> +${sub.HPbonus}</li>`;
+
+    // 2.  well-known abilities
+    ['abilityX', 'abilityY', 'abilityZ'].forEach((k, i) => {
+        if (sub[k])
+            html += `<li><strong>Ability ${i + 1}:</strong> ${sub[k]}</li>`;
     });
 
-    /* ---------- 3.  Everything else (dynamic) ---------- */
-    const alreadyShown = ['name', 'HPbonus', 'abilityX', 'abilityY', 'abilityZ'];
-    Object.keys(subclassElem)
-        .filter(k => !alreadyShown.includes(k) && subclassElem[k] != null)
-        .forEach(k => {
-            const nice = k.replace(/([A-Z])/g, ' $1') // camelCase → human
-                         .replace(/^./, str => str.toUpperCase());
-            html += `<li><strong>${nice}:</strong> ${subclassElem[k]}</li>`;
-        });
+    // 3.  everything else EXCEPT the internal keys
+    const ignore = ['id', 'title', 'tags', 'name', 'HPbonus',
+                    'abilityX', 'abilityY', 'abilityZ'];
 
-    html += `</ul>`;
-    bonusDisplay.innerHTML = html;
+    Object.keys(sub)
+          .filter(k => !ignore.includes(k) && sub[k] != null)
+          .forEach(k => {
+              const nice = k.replace(/([A-Z])/g, ' $1')
+                           .replace(/^./, s => s.toUpperCase());
+              html += `<li><strong>${nice}:</strong> ${sub[k]}</li>`;
+          });
+
+    html += '</ul>';
+    box.innerHTML = html;
 }
 
 
