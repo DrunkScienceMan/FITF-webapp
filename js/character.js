@@ -1,5 +1,7 @@
 // Character state and management
 
+
+
 const character = {
     currentHP: 20,
     maxHP: 20,
@@ -50,22 +52,26 @@ let armors = [];
 let helmets = [];
 let classes = [];
 let subclasses = [];
+let conditions = [];  // Add this line
 
 async function loadGameData() {
     try {
-        const [weaponsData, armorsData, helmetsData, classesData, subclassesData] = await Promise.all([
-            fetch('data/weapons.json').then(r => r.json()),
-            fetch('data/armor.json').then(r => r.json()),
-            fetch('data/helmets.json').then(r => r.json()),
-            fetch('data/classes.json').then(r => r.json()),
-            fetch('data/subclasses.json').then(r => r.json())
-        ]);
+        const [weaponsData, armorsData, helmetsData, classesData, subclassesData, condData] =
+      await Promise.all([
+          fetch('data/weapons.json').then(r => r.json()),
+          fetch('data/armor.json').then(r => r.json()),
+          fetch('data/helmets.json').then(r => r.json()),
+          fetch('data/classes.json').then(r => r.json()),
+          fetch('data/subclasses.json').then(r => r.json()),
+          fetch('data/conditions.json').then(r => r.json())   // ← new line
+      ]);
 
         weapons = weaponsData;
         armors = armorsData;
         helmets = helmetsData;
         classes = classesData;
         subclasses = subclassesData;
+        conditionsMaster = condData;   // ← new line    
 
         return true;
     } catch (error) {
@@ -264,11 +270,41 @@ function calculateHitBonus() {
         }
     }
 
-    return { total: parseInt(bonus), breakdown };
+    // Add condition modifiers
+    const conditionModifiers = calculateConditionAttackModifiers();
+    if (conditionModifiers.bonusDice > 0) {
+        breakdown.push(`Bonus Dice(+${conditionModifiers.bonusDice}d6)`);
+    }
+    if (conditionModifiers.penaltyDice > 0) {
+        breakdown.push(`Penalty Dice(-${conditionModifiers.penaltyDice}d6)`);
+    }
+
+    return { 
+        total: parseInt(bonus), 
+        breakdown,
+        bonusDice: conditionModifiers.bonusDice,
+        penaltyDice: conditionModifiers.penaltyDice
+    };
+}
+
+function calculateConditionAttackModifiers() {
+    if (!character.conditions || character.conditions.length === 0) {
+        return { bonusDice: 0, penaltyDice: 0 };
+    }
+
+    let bonusDice = 0;
+    let penaltyDice = 0;
+
+    character.conditions.forEach(condition => {
+        const stacks = condition.stackable ? condition.stacks : 1;
+        bonusDice += condition.bonus * stacks;
+        penaltyDice += condition.penalty * stacks;
+    });
+
+    return { bonusDice, penaltyDice };
 }
 
 function saveCharacter() {
-    // The data saved is always the base stat from our character object
     const data = {
         stats: character.stats,
         tempStats: character.tempStats,
@@ -279,7 +315,8 @@ function saveCharacter() {
         selectedSubclass: document.getElementById('subclassSelect').value,
         selectedWeapon: document.getElementById('weaponSelect').value,
         selectedArmor: document.getElementById('armorSelect').value,
-        selectedHelmet: document.getElementById('helmetSelect').value
+        selectedHelmet: document.getElementById('helmetSelect').value,
+        conditions: character.conditions || []  // Add this line
     };
     
     localStorage.setItem('fitf-character', JSON.stringify(data));
@@ -302,6 +339,7 @@ function loadCharacter() {
 
         character.skills = data.skills;
         character.currentHP = data.currentHP;
+        character.conditions = data.conditions || [];  // Add this line
 
         document.getElementById('level').value = data.level;
         document.getElementById('classSelect').value = data.selectedClass || '';
@@ -316,3 +354,8 @@ function loadCharacter() {
         return false;
     }
 }
+
+
+
+
+
