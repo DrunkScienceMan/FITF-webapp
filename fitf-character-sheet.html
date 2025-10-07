@@ -64,37 +64,6 @@
             </div>
         </div>
 
-        <!-- Stats -->
-        <div class="section">
-            <div class="section-title">Attributes</div>
-            <div class="grid">
-                <div class="stat-group">
-                    <label>STR:</label>
-                    <input type="number" id="STR" value="0" min="-3" max="5" onchange="updateAll()">
-                </div>
-                <div class="stat-group">
-                    <label>AGI:</label>
-                    <input type="number" id="AGI" value="0" min="-3" max="5" onchange="updateAll()">
-                </div>
-                <div class="stat-group">
-                    <label>DUR:</label>
-                    <input type="number" id="DUR" value="0" min="-3" max="5" onchange="updateAll()">
-                </div>
-                <div class="stat-group">
-                    <label>KNO:</label>
-                    <input type="number" id="KNO" value="0" min="-3" max="5" onchange="updateAll()">
-                </div>
-                <div class="stat-group">
-                    <label>POW:</label>
-                    <input type="number" id="POW" value="0" min="-3" max="5" onchange="updateAll()">
-                </div>
-                <div class="stat-group">
-                    <label>CHA:</label>
-                    <input type="number" id="CHA" value="0" min="-3" max="5" onchange="updateAll()">
-                </div>
-            </div>
-        </div>
-
         <!-- Class Selection -->
         <div class="section">
             <div class="section-title">Class & Subclass</div>
@@ -118,10 +87,65 @@
             </div>
         </div>
 
-        <!-- Skills -->
+              <!-- Stats & Skills Combined -->
         <div class="section">
-            <div class="section-title">Skills</div>
-            <div class="skill-grid" id="skillsGrid"></div>
+            <div class="stats-skills-container">
+                <div class="attributes-column">
+                    <div class="section-title">Attributes</div>
+                    <div class="stat-group">
+                        <label>STR:</label>
+                        <div class="stat-input-wrapper">
+                            <button class="stat-button" onclick="adjustStat('STR', -1)">-</button>
+                            <input type="number" id="STR" value="0" min="-3" max="5" onchange="updateAll()">
+                            <button class="stat-button" onclick="adjustStat('STR', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="stat-group">
+                        <label>AGI:</label>
+                        <div class="stat-input-wrapper">
+                            <button class="stat-button" onclick="adjustStat('AGI', -1)">-</button>
+                            <input type="number" id="AGI" value="0" min="-3" max="5" onchange="updateAll()">
+                            <button class="stat-button" onclick="adjustStat('AGI', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="stat-group">
+                        <label>DUR:</label>
+                        <div class="stat-input-wrapper">
+                            <button class="stat-button" onclick="adjustStat('DUR', -1)">-</button>
+                            <input type="number" id="DUR" value="0" min="-3" max="5" onchange="updateAll()">
+                            <button class="stat-button" onclick="adjustStat('DUR', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="stat-group">
+                        <label>KNO:</label>
+                        <div class="stat-input-wrapper">
+                            <button class="stat-button" onclick="adjustStat('KNO', -1)">-</button>
+                            <input type="number" id="KNO" value="0" min="-3" max="5" onchange="updateAll()">
+                            <button class="stat-button" onclick="adjustStat('KNO', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="stat-group">
+                        <label>POW:</label>
+                        <div class="stat-input-wrapper">
+                            <button class="stat-button" onclick="adjustStat('POW', -1)">-</button>
+                            <input type="number" id="POW" value="0" min="-3" max="5" onchange="updateAll()">
+                            <button class="stat-button" onclick="adjustStat('POW', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="stat-group">
+                        <label>CHA:</label>
+                        <div class="stat-input-wrapper">
+                            <button class="stat-button" onclick="adjustStat('CHA', -1)">-</button>
+                            <input type="number" id="CHA" value="0" min="-3" max="5" onchange="updateAll()">
+                            <button class="stat-button" onclick="adjustStat('CHA', 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="skills-column">
+                    <div class="section-title">Skills</div>
+                    <div class="skill-grid" id="skillsGrid"></div>
+                </div>
+            </div>
         </div>
 
         <!-- Equipment -->
