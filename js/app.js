@@ -10,6 +10,7 @@ async function init() {
     }
 
     populateDropdowns();
+    populateConditionSelect();  // Add this line
 
     document.getElementById('armorSelect').value = 'noarmorvest';
     document.getElementById('helmetSelect').value = 'nohelmet';
@@ -23,6 +24,7 @@ async function init() {
 
     renderSkills();
     updateAll();
+    renderConditions();  // Add this line
 
     console.log('Application initialized successfully!');
 }
@@ -189,28 +191,69 @@ function rollAttack() {
     }
 
     const hitBonusData = calculateHitBonus();
-    const hitRoll = Math.floor(Math.random() * 20) + 1;
-    const hitTotal = hitRoll + hitBonusData.total;
-
+    
+    // Roll the base d20
+    const baseHitRoll = Math.floor(Math.random() * 20) + 1;
+    
+    // Roll bonus dice (d6) and penalty dice (d6)
+    let bonusTotal = 0;
+    let penaltyTotal = 0;
+    
+    if (hitBonusData.bonusDice > 0) {
+        for (let i = 0; i < hitBonusData.bonusDice; i++) {
+            bonusTotal += Math.floor(Math.random() * 6) + 1;
+        }
+    }
+    
+    if (hitBonusData.penaltyDice > 0) {
+        for (let i = 0; i < hitBonusData.penaltyDice; i++) {
+            penaltyTotal += Math.floor(Math.random() * 6) + 1;
+        }
+    }
+    
+    // Calculate final hit roll
+    const hitTotal = baseHitRoll + hitBonusData.total + bonusTotal - penaltyTotal;
+    
+    // Determine if crit or fumble
     let hitText = `${hitTotal}`;
-    if (hitRoll === 20) hitText += ' (CRIT!)';
-    if (hitRoll === 1) hitText += ' (FUMBLE!)';
+    if (baseHitRoll === 20) hitText += ' (CRIT!)';
+    if (baseHitRoll === 1) hitText += ' (FUMBLE!)';
+    
     document.getElementById('attackRoll').textContent = `Hit: ${hitText}`;
     
-    const hitNotation = `1d20(${hitRoll})` + 
-        (hitBonusData.breakdown.length > 0 ? ' + ' + hitBonusData.breakdown.join(' + ') : '');
+    // Build detailed notation
+    let hitNotation = `1d20(${baseHitRoll})`;
+    
+    if (hitBonusData.breakdown.length > 0) {
+        hitNotation += ' + ' + hitBonusData.breakdown.filter(item => 
+            !item.includes('Bonus Dice') && !item.includes('Penalty Dice')
+        ).join(' + ');
+    }
+    
+    if (bonusTotal > 0) {
+        hitNotation += ` + ${hitBonusData.bonusDice}d6(${bonusTotal})`;
+    }
+    
+    if (penaltyTotal > 0) {
+        hitNotation += ` - ${hitBonusData.penaltyDice}d6(${penaltyTotal})`;
+    }
+    
     document.getElementById('attackNotation').textContent = hitNotation;
 
+    // Calculate damage (unchanged)
     const damageData = calculateDamage();
     
-    const finalDamage = hitRoll === 20 ? damageData.total * 2 : damageData.total;
-    const damageText = hitRoll === 20 ? `${finalDamage} (CRIT x2)` : `${finalDamage}`;
+    const finalDamage = baseHitRoll === 20 ? damageData.total * 2 : damageData.total;
+    const damageText = baseHitRoll === 20 ? `${finalDamage} (CRIT x2)` : `${finalDamage}`;
     document.getElementById('damageRoll').textContent = `Dmg: ${damageText}`;
     
     document.getElementById('damageNotation').textContent = damageData.breakdown.join(' + ');
     
-    console.log(`Attack Roll: 1d20(${hitRoll}) + ${hitBonusData.total} = ${hitTotal}`);
-    console.log(`Hit Breakdown: ${hitNotation}`);
+    console.log(`Base Attack Roll: 1d20(${baseHitRoll})`);
+    if (bonusTotal > 0) console.log(`Bonus Dice: ${hitBonusData.bonusDice}d6 = ${bonusTotal}`);
+    if (penaltyTotal > 0) console.log(`Penalty Dice: ${hitBonusData.penaltyDice}d6 = ${penaltyTotal}`);
+    console.log(`Modifiers: +${hitBonusData.total}`);
+    console.log(`Final Hit: ${hitTotal}`);
     console.log(`Damage: ${damageData.notation} = ${finalDamage}`);
 }
 
@@ -388,7 +431,25 @@ function updateWeaponStats() {
     html += `<br><strong>Hit Bonus:</strong> +${weapon.hitbonus || 0}`;
     if (weapon.hitcheckskill) html += `<br><strong>Skill:</strong> ${weapon.hitcheckskill}`;
     if (properties) html += `<br><strong>Properties:</strong> ${properties}`;
-    if (weapon.statuseffectX) html += `<br><strong>Status:</strong> ${weapon.statuseffectX}`;
+    
+    // Add status effect details
+    if (weapon.statuseffectX) {
+        html += `<br><strong>Status:</strong> ${weapon.statuseffectX}`;
+        
+        if (weapon.statuseffectYduration) {
+            html += ` (${weapon.statuseffectYduration} round${weapon.statuseffectYduration > 1 ? 's' : ''})`;
+        }
+        
+        if (weapon.statuseffectZsaferollCL || weapon.statuseffectZsaferolltype) {
+            html += `<br><strong>Save:</strong> `;
+            if (weapon.statuseffectZsaferolltype) {
+                html += `${weapon.statuseffectZsaferolltype}`;
+            }
+            if (weapon.statuseffectZsaferollCL) {
+                html += ` CL ${weapon.statuseffectZsaferollCL}`;
+            }
+        }
+    }
     
     statsDiv.innerHTML = html;
 }
@@ -521,4 +582,128 @@ function adjustDamage(amount) {
     if (value < 0) value = 0;
     
     input.value = value;
+}
+
+
+
+
+function populateConditionSelect() {
+    const select = document.getElementById('conditionSelect');
+    select.innerHTML = '<option value="">— Add condition —</option>';
+    
+    if (conditionsMaster && conditionsMaster.length > 0) {
+        conditionsMaster.forEach(condition => {
+            const option = document.createElement('option');
+            option.value = condition.id;
+            option.textContent = condition.name;
+            select.appendChild(option);
+        });
+    }
+}
+
+function addCondition() {
+    const select = document.getElementById('conditionSelect');
+    const conditionId = select.value;
+    
+    if (!conditionId) return;
+    
+    const condition = conditionsMaster.find(c => c.id === conditionId);
+    if (!condition) return;
+    
+    // Add condition to character
+    if (!character.conditions) {
+        character.conditions = [];
+    }
+    
+    character.conditions.push({
+        id: condition.id,
+        name: condition.name,
+        stackable: condition.stackable,
+        penalty: condition.penalty,
+        bonus: condition.bonus,
+        note: condition.note,
+        stacks: 1
+    });
+    
+    renderConditions();
+    saveCharacter();
+}
+
+function removeCondition(index) {
+    if (character.conditions && character.conditions[index]) {
+        character.conditions.splice(index, 1);
+        renderConditions();
+        saveCharacter();
+    }
+}
+
+function renderConditions() {
+    const list = document.getElementById('conditionList');
+    const summary = document.getElementById('conditionSummary');
+    
+    if (!list) return;
+    
+    list.innerHTML = '';
+    
+    if (!character.conditions || character.conditions.length === 0) {
+        summary.innerHTML = '<em>No active conditions</em>';
+        return;
+    }
+    
+    let totalPenalty = 0;
+    let totalBonus = 0;
+    
+    character.conditions.forEach((condition, index) => {
+        const li = document.createElement('li');
+        li.className = 'condition-item';
+        
+        let displayText = condition.name;
+        if (condition.stackable && condition.stacks > 1) {
+            displayText += ` (${condition.stacks})`;
+        }
+        
+        li.innerHTML = `
+            <span>${displayText}</span>
+            <small>${condition.note}</small>
+            <button onclick="removeCondition(${index})">Remove</button>
+        `;
+        
+        list.appendChild(li);
+        
+        // Calculate totals
+        if (condition.stackable) {
+            totalPenalty += condition.penalty * condition.stacks;
+            totalBonus += condition.bonus * condition.stacks;
+        } else {
+            totalPenalty += condition.penalty;
+            totalBonus += condition.bonus;
+        }
+    });
+    
+    // Calculate attack modifiers
+    const attackModifiers = calculateConditionAttackModifiers();
+    
+    // Update summary
+    summary.innerHTML = `
+        <strong>Condition Summary:</strong><br>
+        Total Penalty: ${totalPenalty} die${totalPenalty !== 1 ? 's' : ''} (-${attackModifiers.penaltyDice}d6 to attacks)<br>
+        Total Bonus: ${totalBonus} die${totalBonus !== 1 ? 's' : ''} (+${attackModifiers.bonusDice}d6 to attacks)
+    `;
+}
+
+function calculateConditionAttackModifiers() {
+    if (!character.conditions || character.conditions.length === 0) {
+        return { bonusDice: 0, penaltyDice: 0 };
+    }
+
+    let bonusDice = 0;
+    let penaltyDice = 0;
+
+    character.conditions.forEach(condition => {
+        const stacks = condition.stackable ? condition.stacks : 1;
+        bonusDice += condition.bonus * stacks;
+        penaltyDice += condition.penalty * stacks;
+    });
+
+    return { bonusDice, penaltyDice };
 }
