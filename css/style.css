@@ -234,3 +234,40 @@ button:active {
     color: #4ecdc4;
 }
 
+.equipment-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 1024px) {
+    .equipment-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.equipment-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.equipment-stats {
+    background: #1a1a1a;
+    padding: 10px;
+    border-radius: 4px;
+    min-height: 60px;
+    color: #aaa;
+    font-size: 0.9em;
+}
+
+.equipment-stats:empty::before {
+    content: "No item selected";
+    color: #666;
+    font-style: italic;
+}
+
+.equipment-stats strong {
+    color: #4ecdc4;
+}
+
