@@ -160,7 +160,7 @@ button:active {
 
 .skill-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 10px;
 }
 
@@ -171,11 +171,52 @@ button:active {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.skill-item:hover {
+    background: #252525;
+    border-color: #444;
+}
+
+.skill-item.skill-focused {
+    background: linear-gradient(135deg, #1a3a3a, #1a1a2a);
+    border-color: #4ecdc4;
+    box-shadow: 0 0 15px rgba(78, 205, 196, 0.5),
+                0 0 30px rgba(78, 205, 196, 0.3),
+                inset 0 0 10px rgba(78, 205, 196, 0.2);
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.skill-item.skill-focused:hover {
+    box-shadow: 0 0 20px rgba(78, 205, 196, 0.7),
+                0 0 40px rgba(78, 205, 196, 0.4),
+                inset 0 0 15px rgba(78, 205, 196, 0.3);
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 0 15px rgba(78, 205, 196, 0.5),
+                    0 0 30px rgba(78, 205, 196, 0.3),
+                    inset 0 0 10px rgba(78, 205, 196, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(78, 205, 196, 0.7),
+                    0 0 40px rgba(78, 205, 196, 0.5),
+                    inset 0 0 15px rgba(78, 205, 196, 0.3);
+    }
 }
 
 .skill-value {
     color: #4ecdc4;
     font-weight: bold;
+}
+
+.skill-item.skill-focused .skill-value {
+    color: #6effef;
+    text-shadow: 0 0 5px rgba(78, 205, 196, 0.8);
 }
 
 .focus-toggle {
@@ -283,57 +324,124 @@ button:active {
     color: #4ecdc4;
 }
 
-.skill-item {
-    background: #1a1a1a;
-    padding: 10px;
-    border-radius: 4px;
+.stats-skills-container {
     display: flex;
-    justify-content: space-between;
+    gap: 20px;
+}
+
+.attributes-column {
+    flex: 0 0 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.attributes-column .section-title {
+    margin-bottom: 5px;
+}
+
+.attributes-column .stat-group {
+    display: flex;
     align-items: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
+    gap: 10px;
 }
 
-.skill-item:hover {
-    background: #252525;
-    border-color: #444;
+.attributes-column label {
+    min-width: 50px;
 }
 
-.skill-item.skill-focused {
-    background: linear-gradient(135deg, #1a3a3a, #1a1a2a);
-    border-color: #4ecdc4;
-    box-shadow: 0 0 15px rgba(78, 205, 196, 0.5),
-                0 0 30px rgba(78, 205, 196, 0.3),
-                inset 0 0 10px rgba(78, 205, 196, 0.2);
-    animation: pulse-glow 2s ease-in-out infinite;
+.skills-column {
+    flex: 1;
 }
 
-.skill-item.skill-focused:hover {
-    box-shadow: 0 0 20px rgba(78, 205, 196, 0.7),
-                0 0 40px rgba(78, 205, 196, 0.4),
-                inset 0 0 15px rgba(78, 205, 196, 0.3);
+.skills-column .section-title {
+    margin-bottom: 10px;
 }
 
-@keyframes pulse-glow {
-    0%, 100% {
-        box-shadow: 0 0 15px rgba(78, 205, 196, 0.5),
-                    0 0 30px rgba(78, 205, 196, 0.3),
-                    inset 0 0 10px rgba(78, 205, 196, 0.2);
+@media (max-width: 768px) {
+    .stats-skills-container {
+        flex-direction: column;
     }
-    50% {
-        box-shadow: 0 0 20px rgba(78, 205, 196, 0.7),
-                    0 0 40px rgba(78, 205, 196, 0.5),
-                    inset 0 0 15px rgba(78, 205, 196, 0.3);
+    
+    .attributes-column {
+        flex: 1;
     }
 }
 
-.skill-value {
-    color: #4ecdc4;
+.stats-skills-container {
+    display: flex;
+    gap: 20px;
+}
+
+.attributes-column {
+    flex: 0 0 150px;  /* Fixed 200px width */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.skills-column {
+    flex: 1;  /* Takes remaining space */
+}
+
+/* Hide the default up/down arrows on number inputs */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield; /* For Firefox */
+}
+
+/* New wrapper for the stat input and buttons */
+.stat-input-wrapper {
+    display: flex;
+    flex: 1;
+}
+
+.stat-input-wrapper input[type="number"] {
+    text-align: center;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    flex: 1; /* Allow input to grow */
+    min-width: 40px; /* Prevent it from becoming too small */
+}
+
+/* Style for the new plus/minus buttons */
+.stat-button {
+    background: #444;
+    border: 1px solid #555;
+    padding: 0;
+    width: 35px;
+    height: auto; /* Let it match the input height */
+    font-size: 1.2em;
     font-weight: bold;
+    flex-shrink: 0; /* Prevent buttons from shrinking */
 }
 
-.skill-item.skill-focused .skill-value {
-    color: #6effef;
-    text-shadow: 0 0 5px rgba(78, 205, 196, 0.8);
+.stat-button:hover {
+    background: #555;
+}
+
+/* Add border radius to the outer buttons for a rounded look */
+.stat-input-wrapper .stat-button:first-child {
+    border-radius: 4px 0 0 4px;
+}
+
+.stat-input-wrapper .stat-button:last-child {
+    border-radius: 0 4px 4px 0;
+}
+
+/* Adjust the main stat-group flex properties */
+.attributes-column .stat-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.attributes-column .stat-group label {
+    flex: 0 0 50px; /* Give the label a fixed width */
+    min-width: 0;
 }
