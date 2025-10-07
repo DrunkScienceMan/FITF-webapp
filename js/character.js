@@ -11,6 +11,14 @@ const character = {
         POW: 0,
         CHA: 0
     },
+    tempStats: {
+        STR: 0,
+        AGI: 0,
+        DUR: 0,
+        KNO: 0,
+        POW: 0,
+        CHA: 0
+    },
     skills: {
         ART: { base: 'AGI', focus: false },
         ESP: { base: 'AGI', focus: false },
@@ -67,7 +75,10 @@ async function loadGameData() {
 }
 
 function getStat(stat) {
-    return parseInt(document.getElementById(stat).value) || 0;
+    // This now reads from the character object, not the input field directly
+    const baseStat = character.stats[stat] || 0;
+    const tempStat = character.tempStats[stat] || 0;
+    return baseStat + tempStat;
 }
 
 function getSkillValue(skill) {
@@ -216,7 +227,7 @@ function calculateHitBonus() {
     const weapon = getSelectedWeapon();
     if (!weapon) return { total: 0, breakdown: [] };
 
-    let bonus = parseInt(weapon.hitbonus) || 0;  // Force to number
+    let bonus = parseInt(weapon.hitbonus) || 0;
     let breakdown = [];
 
     if (weapon.hitbonus) {
@@ -224,7 +235,7 @@ function calculateHitBonus() {
     }
 
     if (weapon.hitcheckskill) {
-        const skillValue = parseInt(getSkillValue(weapon.hitcheckskill)); // Force to number
+        const skillValue = parseInt(getSkillValue(weapon.hitcheckskill));
         bonus += skillValue;
         if (skillValue !== 0) {
             breakdown.push(`${weapon.hitcheckskill}(${skillValue > 0 ? '+' : ''}${skillValue})`);
@@ -238,7 +249,7 @@ function calculateHitBonus() {
             const reqSTR = parseInt(weapon.WConditionX) || 3;
             const bonusAmount = parseInt(weapon.WConditionY) || 2;
             if (getStat('STR') >= reqSTR) {
-                bonus += bonusAmount;  // This should already be a number
+                bonus += bonusAmount;
                 breakdown.push(`Heavy(+${bonusAmount})`);
             }
         }
@@ -247,25 +258,20 @@ function calculateHitBonus() {
             const reqAGI = parseInt(weapon.WConditionX) || 3;
             const bonusAmount = parseInt(weapon.WConditionY) || 2;
             if (getStat('AGI') >= reqAGI) {
-                bonus += bonusAmount;  // This should already be a number
+                bonus += bonusAmount;
                 breakdown.push(`Flexible(+${bonusAmount})`);
             }
         }
     }
 
-    return { total: parseInt(bonus), breakdown };  // Force final result to number
+    return { total: parseInt(bonus), breakdown };
 }
 
 function saveCharacter() {
+    // The data saved is always the base stat from our character object
     const data = {
-        stats: {
-            STR: getStat('STR'),
-            AGI: getStat('AGI'),
-            DUR: getStat('DUR'),
-            KNO: getStat('KNO'),
-            POW: getStat('POW'),
-            CHA: getStat('CHA')
-        },
+        stats: character.stats,
+        tempStats: character.tempStats,
         skills: character.skills,
         currentHP: character.currentHP,
         level: parseInt(document.getElementById('level').value),
@@ -279,6 +285,7 @@ function saveCharacter() {
     localStorage.setItem('fitf-character', JSON.stringify(data));
 }
 
+// --- UPDATED FUNCTION ---
 function loadCharacter() {
     const saved = localStorage.getItem('fitf-character');
     if (!saved) return false;
@@ -286,9 +293,12 @@ function loadCharacter() {
     try {
         const data = JSON.parse(saved);
         
-        Object.keys(data.stats).forEach(stat => {
-            document.getElementById(stat).value = data.stats[stat];
-        });
+        // Load the base stats into the character object
+        character.stats = data.stats;
+        character.tempStats = data.tempStats || { STR: 0, AGI: 0, DUR: 0, KNO: 0, POW: 0, CHA: 0 };
+        
+        // Update the visual display to show the combined total
+        updateAttributeDisplays();
 
         character.skills = data.skills;
         character.currentHP = data.currentHP;
