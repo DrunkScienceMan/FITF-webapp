@@ -252,6 +252,17 @@ button:active {
     gap: 10px;
 }
 
+.equipment-item .stat-group {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.equipment-item label {
+    min-width: auto;
+    margin-bottom: 5px;
+}
+
 .equipment-stats {
     background: #1a1a1a;
     padding: 10px;
@@ -259,6 +270,7 @@ button:active {
     min-height: 60px;
     color: #aaa;
     font-size: 0.9em;
+    line-height: 1.5;
 }
 
 .equipment-stats:empty::before {
@@ -270,4 +282,3 @@ button:active {
 .equipment-stats strong {
     color: #4ecdc4;
 }
-
