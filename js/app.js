@@ -422,3 +422,13 @@ function updateTempStatButtons() {
         }
     });
 }
+
+function adjustDamage(amount) {
+    const input = document.getElementById('damageInput');
+    let value = parseInt(input.value) || 0;
+    value += amount;
+    
+    if (value < 0) value = 0;
+    
+    input.value = value;
+}
