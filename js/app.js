@@ -707,3 +707,115 @@ function calculateConditionAttackModifiers() {
 
     return { bonusDice, penaltyDice };
 }
+
+// Character Import/Export Functions
+function downloadCharacter() {
+    const characterData = {
+        stats: character.stats,
+        tempStats: character.tempStats,
+        skills: character.skills,
+        currentHP: character.currentHP,
+        maxHP: character.maxHP,
+        level: parseInt(document.getElementById('level').value),
+        selectedClass: document.getElementById('classSelect').value,
+        selectedSubclass: document.getElementById('subclassSelect').value,
+        selectedWeapon: document.getElementById('weaponSelect').value,
+        selectedArmor: document.getElementById('armorSelect').value,
+        selectedHelmet: document.getElementById('helmetSelect').value,
+        conditions: character.conditions || [],
+        background: {
+            ideal: document.getElementById('idealInput').value,
+            goal: document.getElementById('goalInput').value,
+            personality: document.getElementById('personalityInput').value,
+            fear: document.getElementById('fearInput').value
+        },
+        exportDate: new Date().toISOString(),
+        version: '1.0'
+    };
+    
+    // Create a blob with the JSON data
+    const jsonString = JSON.stringify(characterData, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    
+    // Create a download link
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    
+    // Generate filename with timestamp
+    const timestamp = new Date().toISOString().slice(0, 10);
+    const className = document.getElementById('classSelect').selectedOptions[0]?.textContent || 'Character';
+    link.download = `FITF_${className}_${timestamp}.json`;
+    
+    // Trigger download
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    
+    console.log('Character downloaded successfully!');
+}
+
+function uploadCharacter(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    
+    reader.onload = function(e) {
+        try {
+            const characterData = JSON.parse(e.target.result);
+            
+            // Validate the data has required fields
+            if (!characterData.stats || !characterData.skills) {
+                throw new Error('Invalid character file format');
+            }
+            
+            // Load the character data
+            character.stats = characterData.stats || { STR: 0, AGI: 0, DUR: 0, KNO: 0, POW: 0, CHA: 0 };
+            character.tempStats = characterData.tempStats || { STR: 0, AGI: 0, DUR: 0, KNO: 0, POW: 0, CHA: 0 };
+            character.skills = characterData.skills || {};
+            character.currentHP = characterData.currentHP || 20;
+            character.conditions = characterData.conditions || [];
+            
+            // Update form fields
+            document.getElementById('level').value = characterData.level || 1;
+            document.getElementById('classSelect').value = characterData.selectedClass || '';
+            document.getElementById('subclassSelect').value = characterData.selectedSubclass || '';
+            document.getElementById('weaponSelect').value = characterData.selectedWeapon || '';
+            document.getElementById('armorSelect').value = characterData.selectedArmor || '';
+            document.getElementById('helmetSelect').value = characterData.selectedHelmet || '';
+            
+            // Load background data if present
+            if (characterData.background) {
+                document.getElementById('idealInput').value = characterData.background.ideal || '';
+                document.getElementById('goalInput').value = characterData.background.goal || '';
+                document.getElementById('personalityInput').value = characterData.background.personality || '';
+                document.getElementById('fearInput').value = characterData.background.fear || '';
+                
+                // Save background to localStorage
+                localStorage.setItem('fitf-background', JSON.stringify(characterData.background));
+            }
+            
+            // Re-render everything
+            renderSkills();
+            renderConditions();
+            updateAll();
+            
+            // Save to localStorage
+            saveCharacter();
+            
+            alert('Character loaded successfully!');
+            console.log('Character uploaded and loaded:', characterData);
+            
+        } catch (error) {
+            alert('Error loading character file: ' + error.message);
+            console.error('Error parsing character file:', error);
+        }
+    };
+    
+    reader.readAsText(file);
+    
+    // Reset the file input so the same file can be uploaded again if needed
+    event.target.value = '';
+}
