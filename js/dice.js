@@ -288,3 +288,163 @@ function getExpectedValue(notation) {
         return 0;
     }
 }
+
+
+
+function calculateConditionAttackModifiers() {
+    if (!character.conditions || character.conditions.length === 0) {
+        return { bonusDice: 0, penaltyDice: 0 };
+    }
+
+    let bonusDice = 0;
+    let penaltyDice = 0;
+
+    character.conditions.forEach(condition => {
+        const stacks = condition.stackable ? condition.stacks : 1;
+        bonusDice += condition.bonus * stacks;
+        penaltyDice += condition.penalty * stacks;
+    });
+
+    return { bonusDice, penaltyDice };
+}
+
+// ===== DICE SIDEBAR FUNCTIONS =====
+let rollHistory = [];
+
+function toggleDiceSidebar() {
+    const sidebar = document.getElementById('diceSidebar');
+    const icon = document.getElementById('diceToggleIcon');
+    
+    sidebar.classList.toggle('open');
+    
+    if (sidebar.classList.contains('open')) {
+        icon.textContent = '◀';
+        loadRollHistory();
+    } else {
+        icon.textContent = '▶';
+    }
+}
+
+function rollSingleDice(sides) {
+    const result = Math.floor(Math.random() * sides) + 1;
+    const resultElement = document.getElementById(`result-d${sides}`);
+    
+    // Animate the result
+    resultElement.style.transform = 'scale(1.3)';
+    resultElement.style.color = '#6effef';
+    resultElement.textContent = result;
+    
+    setTimeout(() => {
+        resultElement.style.transform = 'scale(1)';
+        resultElement.style.color = '#fff';
+    }, 300);
+    
+    // Add to history
+    addToRollHistory(`d${sides}`, result);
+    
+    console.log(`Rolled d${sides}: ${result}`);
+}
+
+function rollCustomDice() {
+    const input = document.getElementById('customDiceInput');
+    const notation = input.value.trim();
+    
+    if (!notation) {
+        alert('Please enter a dice notation (e.g., 2d6+3)');
+        return;
+    }
+    
+    try {
+        const result = rollDice(notation);
+        const resultElement = document.getElementById('customRollResult');
+        
+        // Animate the result
+        resultElement.style.transform = 'scale(1.2)';
+        resultElement.style.color = '#6effef';
+        resultElement.textContent = `${notation} = ${result}`;
+        
+        setTimeout(() => {
+            resultElement.style.transform = 'scale(1)';
+            resultElement.style.color = '#4ecdc4';
+        }, 300);
+        
+        // Add to history
+        addToRollHistory(notation, result);
+        
+        console.log(`Rolled ${notation}: ${result}`);
+    } catch (error) {
+        alert('Invalid dice notation. Examples: 1d20, 2d6+3, 3d8-2');
+        console.error('Dice roll error:', error);
+    }
+}
+
+function addToRollHistory(formula, result) {
+    const timestamp = new Date().toLocaleTimeString();
+    rollHistory.unshift({ formula, result, timestamp });
+    
+    // Keep only last 20 rolls
+    if (rollHistory.length > 20) {
+        rollHistory = rollHistory.slice(0, 20);
+    }
+    
+    saveRollHistory();
+    renderRollHistory();
+}
+
+function renderRollHistory() {
+    const listElement = document.getElementById('rollHistoryList');
+    
+    if (rollHistory.length === 0) {
+        listElement.innerHTML = '<div style="text-align: center; color: #666; padding: 20px;">No rolls yet</div>';
+        return;
+    }
+    
+    listElement.innerHTML = rollHistory.map(roll => `
+        <div class="roll-history-item">
+            <div>
+                <div class="roll-formula">${roll.formula}</div>
+                <div style="font-size: 0.8em; color: #666;">${roll.timestamp}</div>
+            </div>
+            <div class="roll-result">${roll.result}</div>
+        </div>
+    `).join('');
+}
+
+function clearRollHistory() {
+    if (rollHistory.length === 0) return;
+    
+    if (confirm('Clear all roll history?')) {
+        rollHistory = [];
+        saveRollHistory();
+        renderRollHistory();
+    }
+}
+
+function saveRollHistory() {
+    localStorage.setItem('fitf-roll-history', JSON.stringify(rollHistory));
+}
+
+function loadRollHistory() {
+    const saved = localStorage.getItem('fitf-roll-history');
+    if (saved) {
+        try {
+            rollHistory = JSON.parse(saved);
+            renderRollHistory();
+        } catch (e) {
+            console.error('Error loading roll history:', e);
+            rollHistory = [];
+        }
+    }
+}
+
+// Allow Enter key to roll custom dice
+document.addEventListener('DOMContentLoaded', function() {
+    const customInput = document.getElementById('customDiceInput');
+    if (customInput) {
+        customInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                rollCustomDice();
+            }
+        });
+    }
+});
