@@ -90,6 +90,20 @@
                     <input type="number" id="level" value="1" min="1" max="20" onchange="updateAll()">
                 </div>
             </div>
+
+            <!-- Character Import/Export Controls -->
+            <div class="import-export-controls" style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+                <button onclick="downloadCharacter()" style="flex: 1; min-width: 150px;">
+                    💾 Download Character
+                </button>
+                <label for="characterFileInput" style="flex: 1; min-width: 150px;">
+                    <button type="button" onclick="document.getElementById('characterFileInput').click()" style="width: 100%;">
+                        📂 Upload Character
+                    </button>
+                </label>
+                <input type="file" id="characterFileInput" accept=".json" onchange="uploadCharacter(event)" style="display: none;">
+            </div>
+
             <!-- Add class and subclass bonus displays -->
             <div class="bonus-display-container">
                 <div class="bonus-display" id="classBonuses"></div>
