@@ -231,8 +231,72 @@
     <div id="conditionSummary" class="condition-summary"></div>
     </div>
 
+<!-- ===== BACKGROUND SIDEBAR ===== -->
+    <div id="backgroundSidebar" class="background-sidebar">
+        <button class="background-toggle" onclick="toggleBackgroundSidebar()">
+            <span id="bgToggleIcon">◀</span> Background
+        </button>
+        
+        <div class="background-content">
+            <h2>Character Background</h2>
+            
+            <div class="background-field">
+                <label>
+                    Ideal
+                    <button class="help-button" onclick="showSuggestions('ideal')">?</button>
+                </label>
+                <input type="text" id="idealInput" placeholder="Enter your character's ideal..." onchange="saveBackground()">
+            </div>
+            
+            <div class="background-field">
+                <label>
+                    Goal
+                    <button class="help-button" onclick="showSuggestions('goal')">?</button>
+                </label>
+                <input type="text" id="goalInput" placeholder="Enter your character's goal..." onchange="saveBackground()">
+            </div>
+            
+            <div class="background-field">
+                <label>
+                    Personality Traits
+                    <button class="help-button" onclick="showSuggestions('personality')">?</button>
+                </label>
+                <textarea id="personalityInput" rows="3" placeholder="Enter 4-6 personality traits..." onchange="saveBackground()"></textarea>
+            </div>
+            
+            <div class="background-field">
+                <label>
+                    Fear
+                    <button class="help-button" onclick="showSuggestions('fear')">?</button>
+                </label>
+                <input type="text" id="fearInput" placeholder="Enter your character's fear..." onchange="saveBackground()">
+            </div>
+            
+            <div class="background-field">
+                <label>
+                    Disposition
+                    <button class="help-button" onclick="showSuggestions('disposition')">?</button>
+                </label>
+                <input type="text" id="dispositionInput" placeholder="Enter your character's disposition..." onchange="saveBackground()">
+            </div>
+        </div>
+    </div>
+
+    <!-- Suggestion Modal -->
+    <div id="suggestionModal" class="suggestion-modal" onclick="closeSuggestions(event)">
+        <div class="suggestion-content" onclick="event.stopPropagation()">
+            <div class="suggestion-header">
+                <h3 id="suggestionTitle">Suggestions</h3>
+                <button class="close-button" onclick="closeSuggestions()">×</button>
+            </div>
+            <div id="suggestionList" class="suggestion-list"></div>
+        </div>
+    </div>
+
     <script src="js/dice.js"></script>
     <script src="js/character.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/background.js"></script>
+
 </body>
 </html>
