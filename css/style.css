@@ -895,7 +895,7 @@ input[type=number] {
     background-repeat: no-repeat;
     background-position: center;
     pointer-events: none;
-    z-index: 1; /* Ensure graphics are behind text */
+    z-index: 2; /* Ensure graphics are behind text */
 }
 
 .dice-button:nth-child(1)::before {
@@ -951,9 +951,9 @@ input[type=number] {
     font-size: 1.5em;
     font-weight: bold;
     color: #4ecdc4;
-    z-index: 2; /* Increased z-index to ensure text is above graphics */
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 0 0 5px rgba(0, 0, 0, 0.9);
-    position: relative; /* Ensure z-index works properly */
+    z-index: 2;
+    position: relative;
+    /* text-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 0 0 5px rgba(0, 0, 0, 0.9); <-- REMOVE THIS LINE */
 }
 
 .dice-result {
@@ -964,9 +964,9 @@ input[type=number] {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 2; /* Increased z-index to ensure text is above graphics */
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 0 0 5px rgba(0, 0, 0, 0.9);
-    position: relative; /* Ensure z-index works properly */
+    z-index: 2;
+    position: relative;
+    /* text-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 0 0 5px rgba(0, 0, 0, 0.9); <-- AND REMOVE THIS LINE */
 }
 
 .custom-roll-section {
