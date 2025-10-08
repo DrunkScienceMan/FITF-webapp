@@ -231,6 +231,70 @@
     <div id="conditionSummary" class="condition-summary"></div>
     </div>
 </div>
+
+<!-- ===== DICE SIDEBAR (LEFT) ===== -->
+    <div id="diceSidebar" class="dice-sidebar">
+        <button class="dice-toggle" onclick="toggleDiceSidebar()">
+            <span id="diceToggleIcon">â–¶</span> Dice Roller
+        </button>
+        
+        <div class="dice-content">
+            <h2>🎲 Dice Roller</h2>
+            
+            <div class="dice-grid">
+                <div class="dice-button" onclick="rollSingleDice(4)">
+                    <div class="dice-face">d4</div>
+                    <div class="dice-result" id="result-d4">-</div>
+                </div>
+                
+                <div class="dice-button" onclick="rollSingleDice(6)">
+                    <div class="dice-face">d6</div>
+                    <div class="dice-result" id="result-d6">-</div>
+                </div>
+                
+                <div class="dice-button" onclick="rollSingleDice(8)">
+                    <div class="dice-face">d8</div>
+                    <div class="dice-result" id="result-d8">-</div>
+                </div>
+                
+                <div class="dice-button" onclick="rollSingleDice(10)">
+                    <div class="dice-face">d10</div>
+                    <div class="dice-result" id="result-d10">-</div>
+                </div>
+                
+                <div class="dice-button" onclick="rollSingleDice(12)">
+                    <div class="dice-face">d12</div>
+                    <div class="dice-result" id="result-d12">-</div>
+                </div>
+                
+                <div class="dice-button" onclick="rollSingleDice(20)">
+                    <div class="dice-face">d20</div>
+                    <div class="dice-result" id="result-d20">-</div>
+                </div>
+                
+                <div class="dice-button" onclick="rollSingleDice(100)">
+                    <div class="dice-face">d100</div>
+                    <div class="dice-result" id="result-d100">-</div>
+                </div>
+            </div>
+            
+            <div class="custom-roll-section">
+                <h3>Custom Roll</h3>
+                <div class="custom-roll-input">
+                    <input type="text" id="customDiceInput" placeholder="e.g., 2d6+3" />
+                    <button onclick="rollCustomDice()">Roll</button>
+                </div>
+                <div class="custom-roll-result" id="customRollResult"></div>
+            </div>
+            
+            <div class="roll-history">
+                <h3>Roll History</h3>
+                <div id="rollHistoryList" class="roll-history-list"></div>
+                <button class="clear-history-btn" onclick="clearRollHistory()">Clear History</button>
+            </div>
+        </div>
+    </div>
+
 <!-- ===== BACKGROUND SIDEBAR ===== -->
     <div id="backgroundSidebar" class="background-sidebar">
         <button class="background-toggle" onclick="toggleBackgroundSidebar()">
