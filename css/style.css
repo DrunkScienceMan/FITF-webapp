@@ -574,10 +574,10 @@ input[type=number] {
 
 .background-toggle {
     position: absolute;
-    left: -80px;
+    left: -100px;
     top: 50%;
-    transform: translateY(-50%) rotate(-90deg);
-    transform-origin: right center;
+    transform: translateY(-50%) rotate(90deg);
+    transform-origin: center;
     background: #ff6b6b;
     color: #fff;
     border: none;
@@ -589,11 +589,13 @@ input[type=number] {
     border-radius: 8px 8px 0 0;
     white-space: nowrap;
     transition: background 0.3s;
+    z-index: 1001;
 }
 
 .background-toggle:hover {
     background: #ff5252;
 }
+
 
 .background-content {
     padding: 30px 20px;
