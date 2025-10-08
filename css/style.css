@@ -890,7 +890,7 @@ input[type=number] {
     transform: translate(-50%, -50%);
     width: 80px;
     height: 80px;
-    opacity: 0.15;
+    opacity: 0.35;
     background-color: #4ecdc4; /* The color you want */
     pointer-events: none;
     z-index: 2;
@@ -941,12 +941,12 @@ input[type=number] {
 
 /* Now you can easily change colors on hover/active */
 .dice-button:hover::before {
-    opacity: 0.25;
+    opacity: 0.65;
     background-color: #6effef; /* Brighter teal */
 }
 
 .dice-button:active::before {
-    opacity: 0.35;
+    opacity: 0.85;
     background-color: #8ffff5; /* Even brighter */
 }
 
