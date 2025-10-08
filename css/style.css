@@ -552,3 +552,214 @@ input[type=number] {
 .condition-item button{background:#dc3545;padding:2px 8px;font-size:.9em}
 .condition-summary{background:#1a1a1a;padding:10px;border-left:3px solid #ff6b6b;margin-top:10px;font-size:.9em;color:#ccc}
 .condition-summary strong{color:#4ecdc4}
+
+/* Background Sidebar Styles */
+.background-sidebar {
+    position: fixed;
+    right: -400px;
+    top: 0;
+    width: 400px;
+    height: 100vh;
+    background: #2a2a2a;
+    border-left: 3px solid #ff6b6b;
+    transition: right 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.background-sidebar.open {
+    right: 0;
+}
+
+.background-toggle {
+    position: absolute;
+    left: -120px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #ff6b6b;
+    color: #fff;
+    border: none;
+    padding: 15px 10px;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 0.9em;
+    border-radius: 8px 0 0 8px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transition: background 0.3s;
+}
+
+.background-toggle:hover {
+    background: #ff5252;
+}
+
+.background-content {
+    padding: 30px 20px;
+}
+
+.background-content h2 {
+    color: #ff6b6b;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.background-field {
+    margin-bottom: 20px;
+}
+
+.background-field label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ff6b6b;
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 1.1em;
+}
+
+.background-field input,
+.background-field textarea {
+    width: 100%;
+    background: #1a1a1a;
+    border: 1px solid #555;
+    color: #e0e0e0;
+    padding: 10px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95em;
+    resize: vertical;
+}
+
+.background-field input:focus,
+.background-field textarea:focus {
+    outline: none;
+    border-color: #ff6b6b;
+}
+
+.help-button {
+    background: #4ecdc4;
+    color: #fff;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.help-button:hover {
+    background: #45b8af;
+    transform: scale(1.1);
+}
+
+/* Suggestion Modal */
+.suggestion-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+
+.suggestion-modal.active {
+    display: flex;
+}
+
+.suggestion-content {
+    background: #2a2a2a;
+    border: 2px solid #ff6b6b;
+    border-radius: 8px;
+    max-width: 600px;
+    max-height: 80vh;
+    width: 90%;
+    overflow-y: auto;
+}
+
+.suggestion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 2px solid #444;
+    position: sticky;
+    top: 0;
+    background: #2a2a2a;
+    z-index: 1;
+}
+
+.suggestion-header h3 {
+    color: #ff6b6b;
+    margin: 0;
+    font-size: 1.3em;
+    text-transform: uppercase;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    color: #ff6b6b;
+    font-size: 2em;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-button:hover {
+    color: #ff5252;
+}
+
+.suggestion-list {
+    padding: 20px;
+}
+
+.suggestion-item {
+    background: #1a1a1a;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border-left: 3px solid #4ecdc4;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #e0e0e0;
+}
+
+.suggestion-item:hover {
+    background: #252525;
+    border-left-color: #ff6b6b;
+    transform: translateX(5px);
+}
+
+.suggestion-item strong {
+    color: #4ecdc4;
+}
+
+@media (max-width: 768px) {
+    .background-sidebar {
+        width: 100%;
+        right: -100%;
+    }
+
+    .background-toggle {
+        left: -100px;
+    }
+}
