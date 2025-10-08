@@ -574,8 +574,9 @@ input[type=number] {
 
 .background-toggle {
     position: absolute;
-    left: -100px;
+    right: 400px; /* This positions it relative to the sidebar's edge */
     top: 50%;
+    /* ... other styles */
     transform: translateY(-50%) rotate(90deg);
     transform-origin: center;
     background: #ff6b6b;
@@ -761,7 +762,12 @@ input[type=number] {
         right: -100%;
     }
 
-    .background-toggle {
-        left: -100px;
+.background-toggle {
+    position: absolute;
+    right: 400px; /* This positions it relative to the sidebar's edge */
+    top: 50%;
+    /* ... other styles */
+}
+
     }
 }
