@@ -780,3 +780,252 @@ input[type=number] {
     /* ... other styles */
 }
 }
+
+.condition-summary{background:#1a1a1a;padding:10px;border-left:3px solid #ff6b6b;margin-top:10px;font-size:.9em;color:#ccc}
+.condition-summary strong{color:#4ecdc4}
+
+/* Dice Sidebar Styles (Left) */
+.dice-sidebar {
+    position: fixed;
+    left: -400px;
+    top: 0;
+    width: 400px;
+    height: 100vh;
+    background: #2a2a2a;
+    border-right: 3px solid #4ecdc4;
+    transition: left 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.dice-sidebar.open {
+    left: 0;
+}
+
+.dice-toggle {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%) rotate(90deg);
+    transform-origin: center center;
+    background: #4ecdc4;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 0.9em;
+    border-radius: 8px 8px 0 0;
+    white-space: nowrap;
+    transition: left 0.3s ease, background 0.3s;
+    z-index: 1001;
+}
+
+.dice-toggle:hover {
+    background: #45b8af;
+}
+
+.dice-toggle:active {
+    transform: translateY(-50%) translateX(-50%) rotate(90deg);
+}
+
+.dice-sidebar.open .dice-toggle {
+    left: 400px;
+}
+
+.dice-sidebar.open .dice-toggle:active {
+    transform: translateY(-50%) translateX(-50%) rotate(90deg);
+}
+
+.dice-content {
+    padding: 30px 20px;
+}
+
+.dice-content h2 {
+    color: #4ecdc4;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.dice-content h3 {
+    color: #4ecdc4;
+    margin: 20px 0 10px 0;
+    font-size: 1.1em;
+    text-transform: uppercase;
+}
+
+.dice-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.dice-button {
+    background: #1a1a1a;
+    border: 2px solid #444;
+    border-radius: 8px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.dice-button:hover {
+    background: #252525;
+    border-color: #4ecdc4;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(78, 205, 196, 0.3);
+}
+
+.dice-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(78, 205, 196, 0.3);
+}
+
+.dice-face {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #4ecdc4;
+}
+
+.dice-result {
+    font-size: 2em;
+    font-weight: bold;
+    color: #fff;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.custom-roll-section {
+    background: #1a1a1a;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 3px solid #4ecdc4;
+    margin-bottom: 20px;
+}
+
+.custom-roll-input {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.custom-roll-input input {
+    flex: 1;
+    background: #2a2a2a;
+    border: 1px solid #555;
+    color: #e0e0e0;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+}
+
+.custom-roll-input button {
+    background: #4ecdc4;
+    padding: 8px 20px;
+}
+
+.custom-roll-input button:hover {
+    background: #45b8af;
+}
+
+.custom-roll-result {
+    background: #2a2a2a;
+    padding: 12px;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 1.2em;
+    color: #4ecdc4;
+    min-height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.roll-history {
+    background: #1a1a1a;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 3px solid #4ecdc4;
+}
+
+.roll-history-list {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+.roll-history-item {
+    background: #2a2a2a;
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 2px solid #4ecdc4;
+}
+
+.roll-history-item .roll-formula {
+    color: #aaa;
+}
+
+.roll-history-item .roll-result {
+    color: #4ecdc4;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.clear-history-btn {
+    background: #dc3545;
+    width: 100%;
+    padding: 8px;
+    font-size: 0.9em;
+}
+
+.clear-history-btn:hover {
+    background: #c82333;
+}
+
+.roll-history-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.roll-history-list::-webkit-scrollbar-track {
+    background: #1a1a1a;
+    border-radius: 4px;
+}
+
+.roll-history-list::-webkit-scrollbar-thumb {
+    background: #4ecdc4;
+    border-radius: 4px;
+}
+
+.roll-history-list::-webkit-scrollbar-thumb:hover {
+    background: #45b8af;
+}
+
+@media (max-width: 768px) {
+    .dice-sidebar {
+        width: 100%;
+        left: -100%;
+    }
+    
+    .dice-sidebar.open .dice-toggle {
+        left: 100%;
+    }
+}
+
+/* Background Sidebar Styles */
