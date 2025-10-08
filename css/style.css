@@ -574,20 +574,20 @@ input[type=number] {
 
 .background-toggle {
     position: absolute;
-    left: -120px;
+    left: -80px;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-50%) rotate(-90deg);
+    transform-origin: right center;
     background: #ff6b6b;
     color: #fff;
     border: none;
-    padding: 15px 10px;
+    padding: 10px 20px;
     cursor: pointer;
     font-family: 'Courier New', monospace;
     font-weight: bold;
     font-size: 0.9em;
-    border-radius: 8px 0 0 8px;
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
+    border-radius: 8px 8px 0 0;
+    white-space: nowrap;
     transition: background 0.3s;
 }
 
