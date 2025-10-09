@@ -71,10 +71,6 @@
         </div>
 
         <div class="section">
-        
-
-            
-
             <!-- Add class and subclass bonus displays -->
             <div class="bonus-display-container">
                 <div class="bonus-display" id="classBonuses"></div>
@@ -82,89 +78,7 @@
             </div>
         </div>
 
-              <div class="section">
-            <div class="stats-skills-container">
-                <div class="attributes-column">
-                    <div class="section-title">Attributes</div>
-                    <div class="stat-group">
-                        <label>STR:</label>
-                        <div class="stat-input-wrapper">
-                            <button class="stat-button" onclick="adjustStat('STR', -1)">-</button>
-                            <input type="number" id="STR" value="0" min="-3" max="5" onchange="updateAll()">
-                            <button class="stat-button" onclick="adjustStat('STR', 1)">+</button>
-                        </div>
-                        <div class="temp-stat-wrapper">
-                            <button class="temp-stat-button" id="temp-STR-minus" onclick="adjustTempStat('STR', -1)">-</button>
-                            <button class="temp-stat-button" id="temp-STR-plus" onclick="adjustTempStat('STR', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="stat-group">
-                        <label>AGI:</label>
-                        <div class="stat-input-wrapper">
-                            <button class="stat-button" onclick="adjustStat('AGI', -1)">-</button>
-                            <input type="number" id="AGI" value="0" min="-3" max="5" onchange="updateAll()">
-                            <button class="stat-button" onclick="adjustStat('AGI', 1)">+</button>
-                        </div>
-                        <div class="temp-stat-wrapper">
-                            <button class="temp-stat-button" id="temp-AGI-minus" onclick="adjustTempStat('AGI', -1)">-</button>
-                            <button class="temp-stat-button" id="temp-AGI-plus" onclick="adjustTempStat('AGI', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="stat-group">
-                        <label>DUR:</label>
-                        <div class="stat-input-wrapper">
-                            <button class="stat-button" onclick="adjustStat('DUR', -1)">-</button>
-                            <input type="number" id="DUR" value="0" min="-3" max="5" onchange="updateAll()">
-                            <button class="stat-button" onclick="adjustStat('DUR', 1)">+</button>
-                        </div>
-                        <div class="temp-stat-wrapper">
-                            <button class="temp-stat-button" id="temp-DUR-minus" onclick="adjustTempStat('DUR', -1)">-</button>
-                            <button class="temp-stat-button" id="temp-DUR-plus" onclick="adjustTempStat('DUR', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="stat-group">
-                        <label>KNO:</label>
-                        <div class="stat-input-wrapper">
-                            <button class="stat-button" onclick="adjustStat('KNO', -1)">-</button>
-                            <input type="number" id="KNO" value="0" min="-3" max="5" onchange="updateAll()">
-                            <button class="stat-button" onclick="adjustStat('KNO', 1)">+</button>
-                        </div>
-                        <div class="temp-stat-wrapper">
-                            <button class="temp-stat-button" id="temp-KNO-minus" onclick="adjustTempStat('KNO', -1)">-</button>
-                            <button class="temp-stat-button" id="temp-KNO-plus" onclick="adjustTempStat('KNO', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="stat-group">
-                        <label>POW:</label>
-                        <div class="stat-input-wrapper">
-                            <button class="stat-button" onclick="adjustStat('POW', -1)">-</button>
-                            <input type="number" id="POW" value="0" min="-3" max="5" onchange="updateAll()">
-                            <button class="stat-button" onclick="adjustStat('POW', 1)">+</button>
-                        </div>
-                        <div class="temp-stat-wrapper">
-                            <button class="temp-stat-button" id="temp-POW-minus" onclick="adjustTempStat('POW', -1)">-</button>
-                            <button class="temp-stat-button" id="temp-POW-plus" onclick="adjustTempStat('POW', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="stat-group">
-                        <label>CHA:</label>
-                        <div class="stat-input-wrapper">
-                            <button class="stat-button" onclick="adjustStat('CHA', -1)">-</button>
-                            <input type="number" id="CHA" value="0" min="-3" max="5" onchange="updateAll()">
-                            <button class="stat-button" onclick="adjustStat('CHA', 1)">+</button>
-                        </div>
-                         <div class="temp-stat-wrapper">
-                            <button class="temp-stat-button" id="temp-CHA-minus" onclick="adjustTempStat('CHA', -1)">-</button>
-                            <button class="temp-stat-button" id="temp-CHA-plus" onclick="adjustTempStat('CHA', 1)">+</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="skills-column">
-                    <div class="section-title">Skills</div>
-                    <div class="skill-grid" id="skillsGrid"></div>
-                </div>
-            </div>
-        </div>
+
 
         <div class="section">
             <div class="section-title">Equipment</div>
@@ -352,6 +266,90 @@
                 </label>
                 <input type="file" id="characterFileInput" accept=".json" onchange="uploadCharacter(event)" style="display: none;">
             </div>
+
+         <div class="section">
+            <div class="stats-skills-container">
+                <div class="attributes-column">
+                    <div class="section-title">Attributes</div>
+                    <div class="stat-group">
+                        <label>STR:</label>
+                        <div class="stat-input-wrapper">
+                            <button class="stat-button" onclick="adjustStat('STR', -1)">-</button>
+                            <input type="number" id="STR" value="0" min="-3" max="5" onchange="updateAll()">
+                            <button class="stat-button" onclick="adjustStat('STR', 1)">+</button>
+                        </div>
+                        <div class="temp-stat-wrapper">
+                            <button class="temp-stat-button" id="temp-STR-minus" onclick="adjustTempStat('STR', -1)">-</button>
+                            <button class="temp-stat-button" id="temp-STR-plus" onclick="adjustTempStat('STR', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="stat-group">
+                        <label>AGI:</label>
+                        <div class="stat-input-wrapper">
+                            <button class="stat-button" onclick="adjustStat('AGI', -1)">-</button>
+                            <input type="number" id="AGI" value="0" min="-3" max="5" onchange="updateAll()">
+                            <button class="stat-button" onclick="adjustStat('AGI', 1)">+</button>
+                        </div>
+                        <div class="temp-stat-wrapper">
+                            <button class="temp-stat-button" id="temp-AGI-minus" onclick="adjustTempStat('AGI', -1)">-</button>
+                            <button class="temp-stat-button" id="temp-AGI-plus" onclick="adjustTempStat('AGI', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="stat-group">
+                        <label>DUR:</label>
+                        <div class="stat-input-wrapper">
+                            <button class="stat-button" onclick="adjustStat('DUR', -1)">-</button>
+                            <input type="number" id="DUR" value="0" min="-3" max="5" onchange="updateAll()">
+                            <button class="stat-button" onclick="adjustStat('DUR', 1)">+</button>
+                        </div>
+                        <div class="temp-stat-wrapper">
+                            <button class="temp-stat-button" id="temp-DUR-minus" onclick="adjustTempStat('DUR', -1)">-</button>
+                            <button class="temp-stat-button" id="temp-DUR-plus" onclick="adjustTempStat('DUR', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="stat-group">
+                        <label>KNO:</label>
+                        <div class="stat-input-wrapper">
+                            <button class="stat-button" onclick="adjustStat('KNO', -1)">-</button>
+                            <input type="number" id="KNO" value="0" min="-3" max="5" onchange="updateAll()">
+                            <button class="stat-button" onclick="adjustStat('KNO', 1)">+</button>
+                        </div>
+                        <div class="temp-stat-wrapper">
+                            <button class="temp-stat-button" id="temp-KNO-minus" onclick="adjustTempStat('KNO', -1)">-</button>
+                            <button class="temp-stat-button" id="temp-KNO-plus" onclick="adjustTempStat('KNO', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="stat-group">
+                        <label>POW:</label>
+                        <div class="stat-input-wrapper">
+                            <button class="stat-button" onclick="adjustStat('POW', -1)">-</button>
+                            <input type="number" id="POW" value="0" min="-3" max="5" onchange="updateAll()">
+                            <button class="stat-button" onclick="adjustStat('POW', 1)">+</button>
+                        </div>
+                        <div class="temp-stat-wrapper">
+                            <button class="temp-stat-button" id="temp-POW-minus" onclick="adjustTempStat('POW', -1)">-</button>
+                            <button class="temp-stat-button" id="temp-POW-plus" onclick="adjustTempStat('POW', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="stat-group">
+                        <label>CHA:</label>
+                        <div class="stat-input-wrapper">
+                            <button class="stat-button" onclick="adjustStat('CHA', -1)">-</button>
+                            <input type="number" id="CHA" value="0" min="-3" max="5" onchange="updateAll()">
+                            <button class="stat-button" onclick="adjustStat('CHA', 1)">+</button>
+                        </div>
+                         <div class="temp-stat-wrapper">
+                            <button class="temp-stat-button" id="temp-CHA-minus" onclick="adjustTempStat('CHA', -1)">-</button>
+                            <button class="temp-stat-button" id="temp-CHA-plus" onclick="adjustTempStat('CHA', 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="skills-column">
+                    <div class="section-title">Skills</div>
+                    <div class="skill-grid" id="skillsGrid"></div>
+                </div>
+            </div>
+         </div>
     </div>
 
     <!-- Suggestion Modal -->
